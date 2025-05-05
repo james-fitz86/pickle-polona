@@ -1,0 +1,13 @@
+#wrapper{
+    width: 100%;
+    margin: auto;
+    min-height: 100dvh;
+}
+#logo{
+    max-height: 100px;
+    height: auto;
+    width: auto;
+}
+main{
+    padding: 20px;
+}
