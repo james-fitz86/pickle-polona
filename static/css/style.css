@@ -11,3 +11,12 @@
 main{
     padding: 20px;
 }
+@media (max-width: 767px) {
+    .navbar-nav .nav-link {
+      padding: 12px 20px;
+      text-align: center;
+    }
+    .navbar-toggler {
+      margin-bottom: 16px;
+    }
+}
