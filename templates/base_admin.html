@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin Panel{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+    <header class="admin-header">
+        <h1>Admin Dashboard</h1>
+    </header>
+
+    <nav class="admin-nav">
+        <ul>
+            <li><a href="#">Orders</a></li>
+            <li><a href="#">Products</a></li>
+            <li><a href="#">Stock Orders</a></li>
+            <li><a href="#">Messages</a></li>
+            <li><a href="{{ url_for('store.storefront') }}">Store Front</a></li>
+            <li><a href="#">Logout</a></li>
+        </ul>
+    </nav>
+
+    <main class="admin-main">
+        {% block main %}{% endblock %}
+    </main>
+
+    <footer class="admin-footer">
+        <p>2025 Admin Panel</p>
+    </footer>
+</body>
+</html>
