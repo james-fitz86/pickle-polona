@@ -10,7 +10,7 @@
     <div id="admin-wrapper">
         <header class="admin-header">
             <h1>Admin Dashboard</h1>
-                {% if session['username'] %}
+                {% if session.get('username') %}
                     <p>Hi {{ session['username'] }}</p>
                 {% endif %}
         </header>
