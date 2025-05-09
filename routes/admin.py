@@ -4,8 +4,17 @@ import os
 
 admin = Blueprint('admin', __name__, url_prefix='/admin')
 
+load_dotenv()
 admin_username = os.getenv("ADMIN_USERNAME")
 admin_password = os.getenv("ADMIN_PASSWORD")
+
+@admin.before_request
+def restrict_admin_pages():
+    allowed_routes = ['admin.login', 'admin.login_action', 'admin.logout']
+    if 'username' not in session and request.endpoint not in allowed_routes:
+        
+        session['next'] = request.path
+        return redirect(url_for("admin.login"))
 
 @admin.route("/")
 def dashboard():
