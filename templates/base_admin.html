@@ -14,46 +14,48 @@
                     <p>Hi {{ session['username'] }}</p>
                 {% endif %}
         </header>
-        <nav class="admin-nav">
-            <ul class="nav-links">
-                <li class="{% if request.endpoint == 'admin.orders' %}active{% endif %}">
-                    <div class="nav-icon">
-                        <img src="{{ url_for('static', filename='/images/icons/orders.svg') }}" alt="Orders Icon">
-                    </div>
-                    <a  href="{{ url_for('admin.orders') }}">Orders</a>
-                </li>
-                <li class="{% if request.endpoint == 'admin.products' %}active{% endif %}" >
-                    <div class="nav-icon">
-                        <img src="{{ url_for('static', filename='/images/icons/product.svg') }}" alt="Products Icon">
-                    </div>
-                    <a href="{{ url_for('admin.products') }}">Products</a>
-                </li>
-                <li class="{% if request.endpoint == 'admin.stock_orders' %}active{% endif %}">
-                    <div class="nav-icon">
-                        <img src="{{ url_for('static', filename='/images/icons/stock_orders.svg') }}" alt="Stock Orders Icon">
-                    </div>
-                    <a  href="{{ url_for('admin.stock_orders') }}">Stock Orders</a>
-                </li>
-                <li class="{% if request.endpoint == 'admin.messages' %}active{% endif %}">
-                    <div class="nav-icon">
-                        <img src="{{ url_for('static', filename='/images/icons/messages.svg') }}" alt="Messages Icon">
-                    </div>
-                    <a href="{{ url_for('admin.messages') }}">Messages</a>
-                </li>
-                <li>
-                    <div class="nav-icon">
-                        <img src="{{ url_for('static', filename='/images/icons/storefront.svg') }}" alt="Store Front Icon">
-                    </div>
-                    <a href="{{ url_for('store.storefront') }}">Store Front</a>
-                </li>
-                <li>
-                    <div class="nav-icon">
-                        <img src="{{ url_for('static', filename='/images/icons/logout.svg') }}" alt="Logout Icon">
-                    </div>
-                    <a href="{{ url_for('admin.logout') }}">Logout</a>
-                </li>
-            </ul>
-        </nav>
+        {% if session.get('username') %}
+            <nav class="admin-nav">
+                <ul class="nav-links">
+                    <li class="{% if request.endpoint == 'admin.orders' %}active{% endif %}">
+                        <div class="nav-icon">
+                            <img src="{{ url_for('static', filename='/images/icons/orders.svg') }}" alt="Orders Icon">
+                        </div>
+                        <a  href="{{ url_for('admin.orders') }}">Orders</a>
+                    </li>
+                    <li class="{% if request.endpoint == 'admin.products' %}active{% endif %}" >
+                        <div class="nav-icon">
+                            <img src="{{ url_for('static', filename='/images/icons/product.svg') }}" alt="Products Icon">
+                        </div>
+                        <a href="{{ url_for('admin.products') }}">Products</a>
+                    </li>
+                    <li class="{% if request.endpoint == 'admin.stock_orders' %}active{% endif %}">
+                        <div class="nav-icon">
+                            <img src="{{ url_for('static', filename='/images/icons/stock_orders.svg') }}" alt="Stock Orders Icon">
+                        </div>
+                        <a  href="{{ url_for('admin.stock_orders') }}">Stock Orders</a>
+                    </li>
+                    <li class="{% if request.endpoint == 'admin.messages' %}active{% endif %}">
+                        <div class="nav-icon">
+                            <img src="{{ url_for('static', filename='/images/icons/messages.svg') }}" alt="Messages Icon">
+                        </div>
+                        <a href="{{ url_for('admin.messages') }}">Messages</a>
+                    </li>
+                    <li>
+                        <div class="nav-icon">
+                            <img src="{{ url_for('static', filename='/images/icons/storefront.svg') }}" alt="Store Front Icon">
+                        </div>
+                        <a href="{{ url_for('store.storefront') }}">Store Front</a>
+                    </li>
+                    <li>
+                        <div class="nav-icon">
+                            <img src="{{ url_for('static', filename='/images/icons/logout.svg') }}" alt="Logout Icon">
+                        </div>
+                        <a href="{{ url_for('admin.logout') }}">Logout</a>
+                    </li>
+                </ul>
+            </nav>
+        {% endif %}
         <main class="admin-main">
             {% block main %}{% endblock %}
         </main>
