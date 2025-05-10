@@ -1,5 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
 from dotenv import load_dotenv
+from forms.product_form import ProductForm
+from models.product import Product
+from extensions import db
 import os
 
 admin = Blueprint('admin', __name__, url_prefix='/admin')
@@ -70,3 +73,32 @@ def stock_orders():
 def messages():
     """Admin page to view/manage contact messages."""
     return render_template('admin/messages.html')
+
+@admin.route('/add_product', methods=["GET", "POST"])
+def add_product():
+    form = ProductForm()
+    if form.validate_on_submit():
+        new_product = Product(
+            sku=form.sku.data,
+            name=form.name.data,
+            description=form.description.data,
+            price=form.price.data,
+            size=form.size.data,
+            category=form.category.data,
+            ingredients=form.ingredients.data,
+            is_vegan=form.is_vegan.data,
+            is_gluten_free=form.is_gluten_free.data,
+            featured=form.featured.data,
+            image_main=form.image_main.data,
+            image_1=form.image_1.data,
+            image_2=form.image_2.data,
+            stock_quantity=form.stock_quantity.data,
+            in_stock=form.in_stock.data,
+            expiry_date=form.expiry_date.data,
+            location=form.location.data
+        )
+        db.session.add(new_product)
+        db.session.commit()
+        return redirect(url_for("admin.add_product"))
+    else:
+        return render_template("admin/add_product.html", form=form)
