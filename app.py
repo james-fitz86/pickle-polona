@@ -1,11 +1,14 @@
 from flask import Flask
 from routes import blueprints
 from dotenv import load_dotenv
-import os
+from flask_sqlalchemy import SQLAlchemy
+from config import Config
 
 app = Flask(__name__)
+app.config.from_object(Config)
 
-app.secret_key = os.getenv("SECRET_KEY")
+db = SQLAlchemy(app)
+
 
 for bp in blueprints:
     app.register_blueprint(bp)
