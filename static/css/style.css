@@ -20,3 +20,8 @@ main{
       margin-bottom: 16px;
     }
 }
+main img{
+  max-height: 400px;
+    height: auto;
+    width: auto;
+}
