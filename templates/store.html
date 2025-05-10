@@ -8,4 +8,12 @@
 
 {% block main %}
             <h1>Pickle Polona Store</h1>
+            <h2>Items</h2>
+            <ul>
+                {% for product in products %}
+                <li>{{ product.name }}</li>
+                <li>€{{ "%.2f"|format(product.price) }}</li>
+                <img src="{{ product.image_main }}">
+                {% endfor %}
+            </ul>
 {% endblock %}
