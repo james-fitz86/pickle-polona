@@ -1,0 +1,10 @@
+{% extends 'base_admin.html' %}
+
+{% block title %}{{ sku.name }}{% endblock %}
+
+{% block main %}
+        <h1>{{ sku.name }}</h1>
+        <p>{{ sku.description }}</p>
+        <p>€{{ "%.2f"|format(sku.price) }}</p>
+        <p>{{ sku.stock_quantity }}</p>
+{% endblock %}
