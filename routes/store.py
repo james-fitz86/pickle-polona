@@ -9,6 +9,5 @@ store = Blueprint('store', __name__)
 def storefront():
     """Storefront page for the app"""
     stmt = select(Product)
-    print(stmt, flush=True)
     products = db.session.scalars(stmt)
     return render_template("store.html", products=products)
