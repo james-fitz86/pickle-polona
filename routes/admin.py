@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from forms.product_form import ProductForm
 from models.product import Product
 from extensions import db
+from sqlalchemy import select
 import os
 
 admin = Blueprint('admin', __name__, url_prefix='/admin')
@@ -57,7 +58,9 @@ def logout():
 @admin.route('/products')
 def products():
     """Admin page to view/manage products."""
-    return render_template('admin/products.html')
+    stmt = select(Product)
+    products = db.session.scalars(stmt)
+    return render_template('admin/products.html', products=products)
 
 @admin.route('/orders')
 def orders():
