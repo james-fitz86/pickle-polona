@@ -105,3 +105,9 @@ def add_product():
         return redirect(url_for("admin.add_product"))
     else:
         return render_template("admin/add_product.html", form=form)
+
+@admin.route("/product/<string:sku_id>")
+def product(sku_id):
+    stmt = select(Product).where(Product.sku == sku_id)
+    sku = db.session.scalars(stmt).first()
+    return render_template("admin/product.html", sku=sku)
