@@ -23,7 +23,7 @@
                         <td>{{ product.stock_quantity }}</td>
                         <td>{{ product.location }}</td>
                         <td>
-                            <a href="{{ url_for('admin.product', sku_id=product.sku) }}">
+                            <a href="{{ url_for('admin.product', product_sku=product.sku) }}">
                             <button type="button">View</button>
                             </a>
                         </td>
