@@ -12,8 +12,6 @@ class ProductForm(FlaskForm):
     category = StringField("Category", validators=[Optional(), Length(max=50)])
     ingredients = TextAreaField("Ingredients", validators=[Optional()])
 
-    is_vegan = BooleanField("Vegan")
-    is_gluten_free = BooleanField("Gluten Free")
     featured = BooleanField("Featured")
 
     image_main = StringField("Main Image Filename", validators=[Optional(), Length(max=200)])
@@ -22,8 +20,9 @@ class ProductForm(FlaskForm):
 
     stock_quantity = IntegerField("Stock Quantity", validators=[InputRequired()])
     in_stock = BooleanField("In Stock", default=True)
+    packs_per_box = IntegerField("Packs Per Box", validators=[InputRequired()])
 
     expiry_date = DateField("Expiry Date", format='%Y-%m-%d', validators=[Optional()])
-    location = StringField("Location", validators=[Optional(), Length(max=100)])
+    stock_location = StringField("Location", validators=[Optional(), Length(max=100)])
 
     submit = SubmitField("Add Product")
