@@ -3,5 +3,7 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block main %}
-<a href="{{ url_for('admin.add_product') }}">Add Product</a>
+<a href="{{ url_for('admin.add_product') }}">
+    <button type="button">Add Product</button>
+</a>
 {% endblock %}
