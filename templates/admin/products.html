@@ -21,7 +21,7 @@
                         <td>{{ product.name }}</td>
                         <td>{{ product.description }}</td>
                         <td>{{ product.stock_quantity }}</td>
-                        <td>{{ product.location }}</td>
+                        <td>{{ product.stock_location }}</td>
                         <td>
                             <a href="{{ url_for('admin.product', product_sku=product.sku) }}">
                             <button type="button">View</button>
