@@ -7,13 +7,18 @@
 {% block title %}Store{% endblock %}
 
 {% block main %}
-            <h1>Pickle Polona Store</h1>
-            <h2>Items</h2>
-            <ul>
-                {% for product in products %}
-                <li>{{ product.name }}</li>
-                <li>€{{ "%.2f"|format(product.price) }}</li>
-                <img src="{{ product.image_main }}">
-                {% endfor %}
-            </ul>
+    <h1>Pickle Polona Store</h1>
+
+    <div>
+        {% for product in products %}
+        <div>
+            <img src="{{ url_for('static', filename=product.image_main) }}" alt="{{ product.name }} image">
+            <h3>{{ product.name }}</h3>
+            <p class="price">€{{ "%.2f"|format(product.price) }}</p>
+            <a href="{{ url_for('store.item', product_sku=product.sku) }}">
+                <button type="button">View</button>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
 {% endblock %}
