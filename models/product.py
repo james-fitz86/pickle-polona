@@ -14,8 +14,6 @@ class Product(db.Model):
     category = db.mapped_column(db.String(50))
     ingredients = db.mapped_column(db.Text)
 
-    is_vegan = db.mapped_column(db.Boolean, default=False)
-    is_gluten_free = db.mapped_column(db.Boolean, default=False)
     featured = db.mapped_column(db.Boolean, default=False)
 
     image_main = db.mapped_column(db.String(200))
@@ -26,7 +24,8 @@ class Product(db.Model):
     in_stock = db.mapped_column(db.Boolean, default=True)
 
     expiry_date = db.mapped_column(db.Date)
-    location = db.mapped_column(db.String(100))
+    stock_location = db.mapped_column(db.String(100))
+    packs_per_box = db.mapped_column(db.Integer, nullable=False, default=0)
 
     created_at = db.mapped_column(db.DateTime, default=datetime.utcnow)
     updated_at = db.mapped_column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
