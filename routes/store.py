@@ -11,3 +11,9 @@ def storefront():
     stmt = select(Product)
     products = db.session.scalars(stmt)
     return render_template("store.html", products=products)
+
+@store.route("/item/<string:product_sku>")
+def item(product_sku):
+    stmt = select(Product).where(Product.sku == product_sku)
+    product = db.session.scalars(stmt).first()
+    return render_template("item.html", product=product)
