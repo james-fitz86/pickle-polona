@@ -1,10 +1,36 @@
-{% extends 'base_admin.html' %}
+{% extends "base_admin.html" %}
 
 {% block title %}{{ product.name }}{% endblock %}
 
 {% block main %}
-        <h1>{{ product.name }}</h1>
-        <p>{{ product.description }}</p>
-        <p>€{{ "%.2f"|format(product.price) }}</p>
-        <p>{{ product.stock_quantity }}</p>
+<div class="product-container">
+    <h1>{{ product.name }}</h1>
+    <div>
+        {% if product.image_main %}
+            <img src="{{ url_for('static', filename=product.image_main) }}" alt="{{ product.name }} main image">
+        {% endif %}
+        {% if product.image_1 %}
+            <img src="{{ url_for('static', filename=product.image_1) }}" alt="Additional image 1 of {{ product.name }}">
+        {% endif %}
+        {% if product.image_2 %}
+            <img src="{{ url_for('static', filename=product.image_2) }}" alt="Additional image 2 of {{ product.name }}">
+        {% endif %}
+    </div>
+    <div>
+        <p><strong>Description:</strong> {{ product.description }}</p>
+        <p><strong>SKU:</strong> {{ product.sku }}</p>
+        <p><strong>Price:</strong> €{{ "%.2f"|format(product.price) }}</p>
+        <p><strong>Size:</strong> {{ product.size or "N/A" }}</p>
+        <p><strong>Category:</strong> {{ product.category or "Uncategorized" }}</p>
+        <p><strong>Ingredients:</strong> {{ product.ingredients or "Not listed" }}</p>
+        <p><strong>Featured:</strong> {{ "Yes" if product.featured else "No" }}</p>
+        <p><strong>Stock Quantity:</strong> {{ product.stock_quantity }}</p>
+        <p><strong>In Stock:</strong> {{ "Yes" if product.in_stock else "No" }}</p>
+        <p><strong>Expiry Date:</strong> {{ product.expiry_date.strftime("%Y-%m-%d") if product.expiry_date else "N/A" }}</p>
+        <p><strong>Location:</strong> {{ product.stock_location or "Not specified" }}</p>
+        <p><strong>Packs Per Box:</strong> {{ product.packs_per_box }}</p>
+        <p><strong>Created At:</strong> {{ product.created_at.strftime("%Y-%m-%d %H:%M") }}</p>
+        <p><strong>Updated At:</strong> {{ product.updated_at.strftime("%Y-%m-%d %H:%M") }}</p>
+    </div>
+</div>
 {% endblock %}
