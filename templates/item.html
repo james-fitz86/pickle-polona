@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block meta %} 
+        
+{% endblock %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block main %}
+    <img src="{{ url_for('static', filename=product.image_main) }}" alt="{{ product.name }} image">
+    <h1>{{ product.name }}</h1>
+    <p>€{{ "%.2f"|format(product.price) }}</p>
+    <p><strong>Description:</strong><br>{{ product.description }}</p>
+    {% if product.size %}
+    <p><strong>Size:</strong> {{ product.size }}</p>
+    {% endif %}
+    {% if product.ingredients %}
+    <p><strong>Ingredients:</strong> {{ product.ingredients }}</p>
+    {% endif %}
+{% endblock %}
