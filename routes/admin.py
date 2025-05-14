@@ -89,8 +89,6 @@ def add_product():
             size=form.size.data,
             category=form.category.data,
             ingredients=form.ingredients.data,
-            is_vegan=form.is_vegan.data,
-            is_gluten_free=form.is_gluten_free.data,
             featured=form.featured.data,
             image_main=form.image_main.data,
             image_1=form.image_1.data,
@@ -98,7 +96,8 @@ def add_product():
             stock_quantity=form.stock_quantity.data,
             in_stock=form.in_stock.data,
             expiry_date=form.expiry_date.data,
-            location=form.location.data
+            stock_location=form.stock_location.data,
+            packs_per_box=form.packs_per_box.data
         )
         db.session.add(new_product)
         db.session.commit()
