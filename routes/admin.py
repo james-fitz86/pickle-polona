@@ -110,3 +110,17 @@ def product(product_sku):
     stmt = select(Product).where(Product.sku == product_sku)
     product = db.session.scalars(stmt).first()
     return render_template("admin/product.html", product=product)
+
+@admin.route("/product/<string:product_sku>/edit", methods=["GET", "POST"])
+def edit_product(product_sku):
+    product = db.session.scalar(select(Product).where(Product.sku == product_sku))
+
+    form = ProductForm(obj=product)
+    form.submit.label.text = "Save Changes"
+
+    if form.validate_on_submit():
+        form.populate_obj(product)
+        db.session.commit()
+        return redirect(url_for("admin.product", product_sku=product.sku))
+
+    return render_template("admin/edit_product.html", form=form, product=product)
