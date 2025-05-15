@@ -1,0 +1,35 @@
+{% extends 'base_admin.html' %}
+
+{% block title %}Edit Product{% endblock %}
+    
+{% block main %}
+<h1>Edit Product</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <p>{{ form.sku.label }}<br>{{ form.sku(size=40) }}</p>
+        <p>{{ form.name.label }}<br>{{ form.name(size=40) }}</p>
+        <p>{{ form.description.label }}<br>{{ form.description(rows=4, cols=40) }}</p>
+
+        <p>{{ form.price.label }}<br>{{ form.price() }}</p>
+        <p>{{ form.size.label }}<br>{{ form.size(size=30) }}</p>
+        <p>{{ form.category.label }}<br>{{ form.category(size=30) }}</p>
+        <p>{{ form.ingredients.label }}<br>{{ form.ingredients(rows=3, cols=40) }}</p>
+
+    
+        <p>{{ form.featured() }} {{ form.featured.label }}</p>
+
+        <p>{{ form.image_main.label }}<br>{{ form.image_main(size=50) }}</p>
+        <p>{{ form.image_1.label }}<br>{{ form.image_1(size=50) }}</p>
+        <p>{{ form.image_2.label }}<br>{{ form.image_2(size=50) }}</p>
+
+        <p>{{ form.stock_quantity.label }}<br>{{ form.stock_quantity() }}</p>
+        <p>{{ form.in_stock() }} {{ form.in_stock.label }}</p>
+
+        <p>{{ form.expiry_date.label }}<br>{{ form.expiry_date() }}</p>
+        <p>{{ form.stock_location.label }}<br>{{ form.stock_location(size=40) }}</p>
+        <p>{{ form.packs_per_box.label }}<br>{{ form.packs_per_box() }}</p>
+
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}
