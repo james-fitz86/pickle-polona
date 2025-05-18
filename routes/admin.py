@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash
 from dotenv import load_dotenv
 from forms.product_form import ProductForm
 from models.product import Product
@@ -44,6 +44,7 @@ def login_action():
 
     if username == admin_username and password == admin_password:
         session["username"] = request.form["username"]
+        flash(f"{username} successfully logged in!")
         return redirect(url_for("admin.dashboard"))
     
     return render_template("admin/admin_login.html", error="Invalid input")
@@ -51,8 +52,10 @@ def login_action():
 @admin.route("/logout")
 def logout():
     """Log out the user by clearing the session."""
+    username = session.get("username")
     session.pop("username", None)
-
+    
+    flash(f"{username} successfully logged Out!")
     return redirect(url_for("admin.login"))
 
 @admin.route('/products')
@@ -124,3 +127,12 @@ def edit_product(product_sku):
         return redirect(url_for("admin.product", product_sku=product.sku))
 
     return render_template("admin/edit_product.html", form=form, product=product)
+
+@admin.route("/product/<string:product_sku>/delete", methods=["GET"])
+def delete_product(product_sku):
+    product = db.session.scalar(select(Product).where(Product.sku == product_sku))
+    db.session.delete(product)
+    db.session.commit()
+    flash(f"Deleted product with SKU: {product.sku}")
+
+    return redirect(url_for("admin.products"))
