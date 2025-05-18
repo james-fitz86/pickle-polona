@@ -3,33 +3,78 @@
 {% block title %}Add Product{% endblock %}
     
 {% block main %}
-<h1>Add Product</h1>
+<div class="container my-4">
+    <h1 class="mb-4">Add Product</h1>
     <form method="POST">
         {{ form.hidden_tag() }}
 
-        <p>{{ form.sku.label }}<br>{{ form.sku(size=40) }}</p>
-        <p>{{ form.name.label }}<br>{{ form.name(size=40) }}</p>
-        <p>{{ form.description.label }}<br>{{ form.description(rows=4, cols=40) }}</p>
-
-        <p>{{ form.price.label }}<br>{{ form.price() }}</p>
-        <p>{{ form.size.label }}<br>{{ form.size(size=30) }}</p>
-        <p>{{ form.category.label }}<br>{{ form.category(size=30) }}</p>
-        <p>{{ form.ingredients.label }}<br>{{ form.ingredients(rows=3, cols=40) }}</p>
-
-    
-        <p>{{ form.featured() }} {{ form.featured.label }}</p>
-
-        <p>{{ form.image_main.label }}<br>{{ form.image_main(size=50) }}</p>
-        <p>{{ form.image_1.label }}<br>{{ form.image_1(size=50) }}</p>
-        <p>{{ form.image_2.label }}<br>{{ form.image_2(size=50) }}</p>
-
-        <p>{{ form.stock_quantity.label }}<br>{{ form.stock_quantity() }}</p>
-        <p>{{ form.in_stock() }} {{ form.in_stock.label }}</p>
-
-        <p>{{ form.expiry_date.label }}<br>{{ form.expiry_date() }}</p>
-        <p>{{ form.stock_location.label }}<br>{{ form.stock_location(size=40) }}</p>
-        <p>{{ form.packs_per_box.label }}<br>{{ form.packs_per_box() }}</p>
-
-        <p>{{ form.submit() }}</p>
+        <div class="mb-3">
+            {{ form.sku.label(class="form-label") }}
+            {{ form.sku(class="form-control", size=40) }}
+        </div>
+        <div class="mb-3">
+            {{ form.name.label(class="form-label") }}
+            {{ form.name(class="form-control", size=40) }}
+        </div>
+        <div class="mb-3">
+            {{ form.description.label(class="form-label") }}
+            {{ form.description(class="form-control", rows=4, cols=40) }}
+        </div>
+        <div class="mb-3">
+            {{ form.price.label(class="form-label") }}
+            {{ form.price(class="form-control") }}
+        </div>
+        <div class="mb-3">
+            {{ form.size.label(class="form-label") }}
+            {{ form.size(class="form-control", size=30) }}
+        </div>
+        <div class="mb-3">
+            {{ form.category.label(class="form-label") }}
+            {{ form.category(class="form-control", size=30) }}
+        </div>
+        <div class="mb-3">
+            {{ form.ingredients.label(class="form-label") }}
+            {{ form.ingredients(class="form-control", rows=3, cols=40) }}
+        </div>
+        <div class="form-check mb-3">
+            {{ form.featured(class="form-check-input") }}
+            {{ form.featured.label(class="form-check-label") }}
+        </div>
+        <div class="mb-3">
+            {{ form.image_main.label(class="form-label") }}
+            {{ form.image_main(class="form-control", size=50) }}
+        </div>
+        <div class="mb-3">
+            {{ form.image_1.label(class="form-label") }}
+            {{ form.image_1(class="form-control", size=50) }}
+        </div>
+        <div class="mb-3">
+            {{ form.image_2.label(class="form-label") }}
+            {{ form.image_2(class="form-control", size=50) }}
+        </div>
+        <div class="mb-3">
+            {{ form.stock_quantity.label(class="form-label") }}
+            {{ form.stock_quantity(class="form-control") }}
+        </div>
+        <div class="form-check mb-3">
+            {{ form.in_stock(class="form-check-input") }}
+            {{ form.in_stock.label(class="form-check-label") }}
+        </div>
+        <div class="mb-3">
+            {{ form.expiry_date.label(class="form-label") }}
+            {{ form.expiry_date(class="form-control") }}
+        </div>
+        <div class="mb-3">
+            {{ form.stock_location.label(class="form-label") }}
+            {{ form.stock_location(class="form-control", size=40) }}
+        </div>
+        <div class="mb-4">
+            {{ form.packs_per_box.label(class="form-label") }}
+            {{ form.packs_per_box(class="form-control") }}
+        </div>
+        <div>
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
     </form>
+</div>
 {% endblock %}

@@ -3,37 +3,47 @@
 {% block title %}{{ product.name }}{% endblock %}
 
 {% block main %}
-<div class="product-container">
-    <h1>{{ product.name }}</h1>
-    <div>
+<div class="container my-4">
+    <h1 class="mb-4">{{ product.name }}</h1>
+    <div class="row mb-4">
         {% if product.image_main %}
-            <img src="{{ url_for('static', filename=product.image_main) }}" alt="{{ product.name }} main image">
+            <div class="col-md-4 mb-3">
+                <img src="{{ url_for('static', filename=product.image_main) }}" alt="{{ product.name }} main image" class="img-fluid rounded shadow-sm">
+            </div>
         {% endif %}
         {% if product.image_1 %}
-            <img src="{{ url_for('static', filename=product.image_1) }}" alt="Additional image 1 of {{ product.name }}">
+            <div class="col-md-4 mb-3">
+                <img src="{{ url_for('static', filename=product.image_1) }}" alt="Additional image 1 of {{ product.name }}" class="img-fluid rounded shadow-sm">
+            </div>
         {% endif %}
         {% if product.image_2 %}
-            <img src="{{ url_for('static', filename=product.image_2) }}" alt="Additional image 2 of {{ product.name }}">
+            <div class="col-md-4 mb-3">
+                <img src="{{ url_for('static', filename=product.image_2) }}" alt="Additional image 2 of {{ product.name }}" class="img-fluid rounded shadow-sm">
+            </div>
         {% endif %}
     </div>
-    <div>
-        <p><strong>Description:</strong> {{ product.description }}</p>
-        <p><strong>SKU:</strong> {{ product.sku }}</p>
-        <p><strong>Price:</strong> €{{ "%.2f"|format(product.price) }}</p>
-        <p><strong>Size:</strong> {{ product.size or "N/A" }}</p>
-        <p><strong>Category:</strong> {{ product.category or "Uncategorized" }}</p>
-        <p><strong>Ingredients:</strong> {{ product.ingredients or "Not listed" }}</p>
-        <p><strong>Featured:</strong> {{ "Yes" if product.featured else "No" }}</p>
-        <p><strong>Stock Quantity:</strong> {{ product.stock_quantity }}</p>
-        <p><strong>In Stock:</strong> {{ "Yes" if product.in_stock else "No" }}</p>
-        <p><strong>Expiry Date:</strong> {{ product.expiry_date.strftime("%Y-%m-%d") if product.expiry_date else "N/A" }}</p>
-        <p><strong>Location:</strong> {{ product.stock_location or "Not specified" }}</p>
-        <p><strong>Packs Per Box:</strong> {{ product.packs_per_box }}</p>
-        <p><strong>Created At:</strong> {{ product.created_at.strftime("%Y-%m-%d %H:%M") }}</p>
-        <p><strong>Updated At:</strong> {{ product.updated_at.strftime("%Y-%m-%d %H:%M") }}</p>
+    <div class="row">
+        <div class="col-md-8">
+            <ul class="list-group mb-4">
+                <li class="list-group-item"><strong>Description:</strong> {{ product.description }}</li>
+                <li class="list-group-item"><strong>SKU:</strong> {{ product.sku }}</li>
+                <li class="list-group-item"><strong>Price:</strong> €{{ "%.2f"|format(product.price) }}</li>
+                <li class="list-group-item"><strong>Size:</strong> {{ product.size or "N/A" }}</li>
+                <li class="list-group-item"><strong>Category:</strong> {{ product.category or "Uncategorized" }}</li>
+                <li class="list-group-item"><strong>Ingredients:</strong> {{ product.ingredients or "Not listed" }}</li>
+                <li class="list-group-item"><strong>Featured:</strong> {{ "Yes" if product.featured else "No" }}</li>
+                <li class="list-group-item"><strong>Stock Quantity:</strong> {{ product.stock_quantity }}</li>
+                <li class="list-group-item"><strong>In Stock:</strong> {{ "Yes" if product.in_stock else "No" }}</li>
+                <li class="list-group-item"><strong>Expiry Date:</strong> {{ product.expiry_date.strftime("%Y-%m-%d") if product.expiry_date else "N/A" }}</li>
+                <li class="list-group-item"><strong>Location:</strong> {{ product.stock_location or "Not specified" }}</li>
+                <li class="list-group-item"><strong>Packs Per Box:</strong> {{ product.packs_per_box }}</li>
+                <li class="list-group-item"><strong>Created At:</strong> {{ product.created_at.strftime("%Y-%m-%d %H:%M") }}</li>
+                <li class="list-group-item"><strong>Updated At:</strong> {{ product.updated_at.strftime("%Y-%m-%d %H:%M") }}</li>
+            </ul>
+            <a href="{{ url_for('admin.edit_product', product_sku=product.sku) }}" class="btn btn-warning">
+                Edit Product
+            </a>
+        </div>
     </div>
-    <a href="{{ url_for('admin.edit_product', product_sku=product.sku) }}">
-        <button type="button">Edit</button>
-    </a>
 </div>
 {% endblock %}
