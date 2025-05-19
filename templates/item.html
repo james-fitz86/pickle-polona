@@ -7,14 +7,47 @@
 {% block title %}{{ product.name }}{% endblock %}
 
 {% block main %}
-    <img src="{{ url_for('static', filename=product.image_main) }}" alt="{{ product.name }} image">
-    <h1>{{ product.name }}</h1>
-    <p>€{{ "%.2f"|format(product.price) }}</p>
-    <p><strong>Description:</strong><br>{{ product.description }}</p>
-    {% if product.size %}
-    <p><strong>Size:</strong> {{ product.size }}</p>
-    {% endif %}
-    {% if product.ingredients %}
-    <p><strong>Ingredients:</strong> {{ product.ingredients }}</p>
-    {% endif %}
+<div class="container mt-5">
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="mb-3">
+                <img src="{{ url_for('static', filename=product.image_main) }}" 
+                     class="img-fluid rounded shadow-sm d-block mx-auto"
+                     style="max-height: 500px; object-fit: contain;"
+                     alt="{{ product.name }} main image">
+            </div>
+            <div class="text-center">
+                <img src="{{ url_for('static', filename=product.image_1) }}" 
+                     class="img-fluid rounded shadow-sm"
+                     style="max-width: 100%; max-height: 280px; object-fit: contain;"
+                     alt="{{ product.name }} secondary image">
+            </div>
+        </div>
+        <div class="col-md-6 d-flex flex-column">
+            <h1 class="mb-3">{{ product.name }}</h1>
+            <p class="fs-4 text-success fw-semibold">€{{ "%.2f"|format(product.price) }}</p>
+            <div class="mb-3">
+                <h5>Description:</h5>
+                <p>{{ product.description }}</p>
+            </div>
+            {% if product.size %}
+            <div class="mb-3">
+                <h6>Size:</h6>
+                <p>{{ product.size }}</p>
+            </div>
+            {% endif %}
+            {% if product.ingredients %}
+            <div class="mb-3">
+                <h6>Ingredients:</h6>
+                <p>{{ product.ingredients }}</p>
+            </div>
+            {% endif %}
+            <div class="mt-auto">
+                <a href="{{ url_for('store.storefront') }}" class="btn btn-outline-secondary">Back to Store</a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
+
+
