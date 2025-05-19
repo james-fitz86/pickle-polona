@@ -25,3 +25,17 @@ main img{
     height: auto;
     width: auto;
 }
+.btn-outline-primary{
+  color: #494a22 !important;
+  border-color: #494a22 !important;
+}
+.btn-outline-primary:hover,
+.btn-outline-primary:focus,
+.btn-outline-primary:active{
+  color: #fff !important;
+  background-color: #494a22 !important;
+  border-color: #494a22 !important;
+}
+.custom-shadow-olive{
+  box-shadow: 0 0.5rem 1rem rgba(73, 74, 34, 0.5);
+}
