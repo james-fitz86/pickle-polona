@@ -37,6 +37,15 @@
                 <li class="list-group-item"><strong>Created At:</strong> {{ product.created_at.strftime("%Y-%m-%d %H:%M") }}</li>
                 <li class="list-group-item"><strong>Updated At:</strong> {{ product.updated_at.strftime("%Y-%m-%d %H:%M") }}</li>
             </ul>
+            <h2>Stock Batches</h2>
+            <ul class="list-group mb-4">
+                <li class="list-group-item"><strong>Total Quantity: {{ product.batches | map(attribute='stock_quantity') | sum }}</strong></li>
+                {% for batch in batches %}
+                    <li class="list-group-item"><strong>Batch Quantity:</strong> {{ batch.stock_quantity}}</li>
+                    <li class="list-group-item"><strong>Batch Location:</strong> {{ batch.stock_location }}</li>
+                    <li class="list-group-item"><strong>Batch Expiry Date:</strong> {{ batch.expiry_date }}</li>
+                {% endfor %}
+            </ul>
             <a href="{{ url_for('admin.edit_product', product_sku=product.sku) }}" class="btn btn-warning">
                 Edit Product
             </a>
