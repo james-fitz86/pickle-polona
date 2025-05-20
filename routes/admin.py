@@ -115,7 +115,8 @@ def product(product_sku):
     "Admin page to display individual Product"
     stmt = select(Product).where(Product.sku == product_sku)
     product = db.session.scalars(stmt).first()
-    return render_template("admin/product.html", product=product)
+    batches = product.batches
+    return render_template("admin/product.html", product=product, batches=batches)
 
 @admin.route("/product/<string:product_sku>/edit", methods=["GET", "POST"])
 def edit_product(product_sku):
