@@ -1,0 +1,44 @@
+{% extends 'base_admin.html' %}
+
+{% block title %}Stock Batches{% endblock %}
+    
+{% block main %}
+<div class="container my-4"></div>
+    <div class="d-flex justify-content-end mb-3">
+        <a href="{{ url_for('admin.stock_batch') }}" class="btn btn-success">
+            Add Stock
+        </a>
+        </div>
+        <h1 class="mb-4">Stock Batches</h1>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">SKU</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Location</th>
+                        <th scope="col">Expiry Date</th>
+                        <th scope="col">Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for batch in batches %}
+                    <tr>
+                        <td>{{ batch.product.name }}</td>
+                        <td>{{ batch.product_sku }}</td>
+                        <td>{{ batch.stock_quantity}}</td>
+                        <td>{{ batch.stock_location }}</td>
+                        <td>{{ batch.expiry_date }}</td>
+                        <td>
+                            <a href="#" class="btn btn-primary btn-sm">
+                                View
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
