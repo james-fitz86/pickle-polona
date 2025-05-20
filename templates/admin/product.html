@@ -32,10 +32,7 @@
                 <li class="list-group-item"><strong>Category:</strong> {{ product.category or "Uncategorized" }}</li>
                 <li class="list-group-item"><strong>Ingredients:</strong> {{ product.ingredients or "Not listed" }}</li>
                 <li class="list-group-item"><strong>Featured:</strong> {{ "Yes" if product.featured else "No" }}</li>
-                <li class="list-group-item"><strong>Stock Quantity:</strong> {{ product.stock_quantity }}</li>
                 <li class="list-group-item"><strong>In Stock:</strong> {{ "Yes" if product.in_stock else "No" }}</li>
-                <li class="list-group-item"><strong>Expiry Date:</strong> {{ product.expiry_date.strftime("%Y-%m-%d") if product.expiry_date else "N/A" }}</li>
-                <li class="list-group-item"><strong>Location:</strong> {{ product.stock_location or "Not specified" }}</li>
                 <li class="list-group-item"><strong>Packs Per Box:</strong> {{ product.packs_per_box }}</li>
                 <li class="list-group-item"><strong>Created At:</strong> {{ product.created_at.strftime("%Y-%m-%d %H:%M") }}</li>
                 <li class="list-group-item"><strong>Updated At:</strong> {{ product.updated_at.strftime("%Y-%m-%d %H:%M") }}</li>
