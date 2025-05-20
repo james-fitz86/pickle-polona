@@ -32,9 +32,9 @@
                     </li>
                     <li class="{% if request.endpoint == 'admin.stock_orders' %}active{% endif %}">
                         <div class="nav-icon">
-                            <img src="{{ url_for('static', filename='/images/icons/stock_orders.svg') }}" alt="Stock Orders Icon">
+                            <img src="{{ url_for('static', filename='/images/icons/stock_batches.svg') }}" alt="Stock Orders Icon">
                         </div>
-                        <a  href="{{ url_for('admin.stock_orders') }}">Stock Orders</a>
+                        <a  href="{{ url_for('admin.stock_batches') }}">Stock Batches</a>
                     </li>
                     <li class="{% if request.endpoint == 'admin.messages' %}active{% endif %}">
                         <div class="nav-icon">
