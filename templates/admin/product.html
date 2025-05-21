@@ -55,7 +55,7 @@
                             <td>{{ batch.stock_location }}</td>
                             <td>{{ batch.expiry_date }}</td>
                             <td>
-                                <a href="#" class="btn btn-warning">
+                                <a href="{{ url_for('admin.edit_batch', id=batch.id) }}" class="btn btn-warning">
                                     Edit Batch
                                 </a>
                             </td>
