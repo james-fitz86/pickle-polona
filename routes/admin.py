@@ -77,7 +77,8 @@ def stock_batches():
     """Admin page to view/manage stock batches."""
     stmt = select(Batch)
     batches = db.session.scalars(stmt)
-    return render_template('admin/stock_batches.html', batches=batches)
+    batches_sorted = sorted(batches, key=lambda b: b.expiry_date)
+    return render_template('admin/stock_batches.html', batches=batches_sorted)
 
 @admin.route('/messages')
 def messages():
@@ -116,7 +117,8 @@ def product(product_sku):
     stmt = select(Product).where(Product.sku == product_sku)
     product = db.session.scalars(stmt).first()
     batches = product.batches
-    return render_template("admin/product.html", product=product, batches=batches)
+    batches_sorted = sorted(batches, key=lambda b: b.expiry_date)
+    return render_template("admin/product.html", product=product, batches=batches_sorted)
 
 @admin.route("/product/<string:product_sku>/edit", methods=["GET", "POST"])
 def edit_product(product_sku):
