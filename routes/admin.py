@@ -135,16 +135,6 @@ def edit_product(product_sku):
 
     return render_template("admin/edit_product.html", form=form, product=product)
 
-@admin.route("/product/<string:product_sku>/delete", methods=["GET"])
-def delete_product(product_sku):
-    """Admin page to delete individual Product"""
-    product = db.session.scalar(select(Product).where(Product.sku == product_sku))
-    db.session.delete(product)
-    db.session.commit()
-    flash(f"Deleted product with SKU: {product.sku}")
-
-    return redirect(url_for("admin.products"))
-
 @admin.route('/stock_batch/', methods=['GET', 'POST'])
 def stock_batch():
     """Admin page to add a stock batch"""
@@ -168,7 +158,7 @@ def stock_batch():
 
 @admin.route("/stock_batch/<int:id>/edit", methods=["GET", "POST"])
 def edit_batch(id):
-    """Admin page to edit indivual Batch"""
+    """Admin page to edit individual Batch from Batches page"""
     batch = db.session.scalar(select(Batch).where(Batch.id == id))
 
     form = StockForm(obj=batch)
@@ -185,7 +175,7 @@ def edit_batch(id):
 
 @admin.route("/product/<string:product_sku>/<int:id>/edit", methods=["GET", "POST"])
 def edit_product_batch(id, product_sku):
-    """Admin page to edit indivual Batch"""
+    """Admin page to edit individual Batch from Product page"""
     batch = db.session.scalar(select(Batch).where(Batch.id == id))
     product = db.session.scalar(select(Product).where(Product.sku == product_sku))
 
@@ -201,3 +191,12 @@ def edit_product_batch(id, product_sku):
 
     return render_template("admin/edit_batch.html", form=form, batch=batch)
 
+@admin.route("/stock_batch/<int:id>/delete", methods=["GET"])
+def delete_batch(id):
+    """Admin page to delete individual Batch"""
+    batch = db.session.scalar(select(Batch).where(Batch.id == id))
+    db.session.delete(batch)
+    db.session.commit()
+    flash(f"Deleted batch with ID: {batch.id}")
+
+    return redirect(url_for("admin.stock_batches"))
