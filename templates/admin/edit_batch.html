@@ -22,7 +22,7 @@
         </div>
         <div class="d-flex gap-2">
             {{ form.submit(class="btn btn-success") }}
-            <a href="#" class="btn btn-danger">
+            <a href="{{ url_for('admin.delete_batch', id=batch.id) }}" class="btn btn-danger">
                 Delete Batch
             </a>
         </div>
