@@ -189,14 +189,26 @@ def edit_product_batch(id, product_sku):
         db.session.commit()
         return redirect(url_for("admin.product", product_sku=product.sku))
 
-    return render_template("admin/edit_batch.html", form=form, batch=batch)
+    return render_template("admin/edit_product_batch.html", form=form, batch=batch)
 
 @admin.route("/stock_batch/<int:id>/delete", methods=["GET"])
 def delete_batch(id):
-    """Admin page to delete individual Batch"""
+    """Admin page to delete individual Batch from Batches page"""
     batch = db.session.scalar(select(Batch).where(Batch.id == id))
     db.session.delete(batch)
     db.session.commit()
     flash(f"Deleted batch with ID: {batch.id}")
 
     return redirect(url_for("admin.stock_batches"))
+
+@admin.route("/product/<string:product_sku>/<int:id>/delete", methods=["GET"])
+def delete_product_batch(id, product_sku):
+    """Admin page to delete individual Batch from Product page"""
+    batch = db.session.scalar(select(Batch).where(Batch.id == id))
+    product = db.session.scalar(select(Product).where(Product.sku == product_sku))
+
+    db.session.delete(batch)
+    db.session.commit()
+    flash(f"Deleted batch with ID: {batch.id}")
+
+    return redirect(url_for("admin.product", product_sku=product.sku))
