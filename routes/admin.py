@@ -182,3 +182,22 @@ def edit_batch(id):
         return redirect(url_for("admin.stock_batches", id=batch.id))
 
     return render_template("admin/edit_batch.html", form=form, batch=batch)
+
+@admin.route("/product/<string:product_sku>/<int:id>/edit", methods=["GET", "POST"])
+def edit_product_batch(id, product_sku):
+    """Admin page to edit indivual Batch"""
+    batch = db.session.scalar(select(Batch).where(Batch.id == id))
+    product = db.session.scalar(select(Product).where(Product.sku == product_sku))
+
+    form = StockForm(obj=batch)
+    form.product_sku.choices = [(product.sku, f"{product.sku} - {product.name}") for product in Product.query.all()]
+
+    form.submit.label.text = "Save Changes"
+
+    if form.validate_on_submit():
+        form.populate_obj(batch)
+        db.session.commit()
+        return redirect(url_for("admin.product", product_sku=product.sku))
+
+    return render_template("admin/edit_batch.html", form=form, batch=batch)
+
