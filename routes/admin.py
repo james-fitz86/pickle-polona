@@ -102,7 +102,7 @@ def add_product():
             image_main=form.image_main.data,
             image_1=form.image_1.data,
             image_2=form.image_2.data,
-            in_stock=form.in_stock.data,
+            active=form.active.data,
             packs_per_box=form.packs_per_box.data
         )
         db.session.add(new_product)

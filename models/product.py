@@ -20,7 +20,7 @@ class Product(db.Model):
     image_1 = db.mapped_column(db.String(200))
     image_2 = db.mapped_column(db.String(200))
 
-    in_stock = db.mapped_column(db.Boolean, default=True)
+    active = db.mapped_column(db.Boolean, default=True)
 
     packs_per_box = db.mapped_column(db.Integer, nullable=False, default=0)
 
