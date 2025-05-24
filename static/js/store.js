@@ -4,16 +4,24 @@ if (!localStorage.getItem("cart")) {
 
 function addToCart(){
     const input = document.querySelector(".quantity-input");
-    const quantity = input.value;
+    const quantity = parseInt(input.value);
     const sku = input.dataset.productSku;
-    cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const name = input.dataset.productName
+    const image = input.dataset.productImage
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+    const existingItem = cart.find(item => item.sku === sku);
     
-    cart.push({sku, quantity});
+    if (existingItem){
+        existingItem.quantity = (parseInt(existingItem.quantity)) + quantity;
+        console.log(`Quanity of ${name} has been updated`);
+    } else {
+        cart.push({sku, name, quantity, image});
+        console.log(`${quantity} of ${name} added to cart`);
+    }
 
     localStorage.setItem("cart", JSON.stringify(cart));
-
-    console.log(`${quantity} of ${sku} added to cart`)
+    
 }
 
 function seeCart(){
@@ -25,6 +33,7 @@ function seeCart(){
 function emptyCart(){
     localStorage.setItem("cart", JSON.stringify([]));
 }
+
 const addToCartButton = document.querySelector('.add-to-cart-btn');
 
 addToCartButton.addEventListener('click', addToCart);
