@@ -6,6 +6,17 @@
 
 {% block title %}{{ product.name }}{% endblock %}
 
+{% block cart %}
+<div class="d-flex justify-content-end" style="padding:10px;">
+    <a href="/cart" class="position-relative d-inline-block" style="width: 80px; height: 80px;">
+        <img src="/static/images/icons/cart.svg" alt="Cart" style="width: 100%; height: 100%; object-fit: contain;">
+        <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">
+            0
+        </span>
+    </a>
+</div>
+{% endblock %}
+
 {% block main %}
 <div class="container mt-5">
     <div class="row g-4">
@@ -52,7 +63,9 @@
                         value="1" 
                         min="1" 
                         max="{{ product.batches | map(attribute='stock_quantity') | sum }}"
-                        data-product-sku="{{ product.sku }}">
+                        data-product-sku="{{ product.sku }}"
+                        data-product-name="{{ product.name }}"
+                        data-product-image="{{ url_for('static', filename=product.image_main) }}">
                 </div>
                 <a href="{{ url_for('store.storefront') }}" class="btn btn-outline-secondary">Back to Store</a>
                 <button class="btn btn-primary add-to-cart-btn" data-product-sku="{{ product.sku }}">Add to Cart
