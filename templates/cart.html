@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block meta %} 
+        
+{% endblock %}
+
+{% block title %}Shopping Cart{% endblock %}
+
+{% block main %}
+            <div class="container my-4 text-center">
+                <h2>Your Cart</h2>
+                <ul id="cart-items-container" class="list-group container my-4"></ul>
+                <div class="d-flex justify-content-center gap-3 flex-wrap"></div>
+                    <a href="{{ url_for('store.storefront') }}" class="btn btn-outline-secondary">Back to Store</a>
+                    <button class="btn btn-primary empty-cart-btn">Empty Cart</button>
+                </div>
+            </div>
+            
+{% endblock %}
+
+{% block extra_script %}
+<script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+<script>
+displayCartItems();
+</script>
+{% endblock %}
