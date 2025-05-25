@@ -14,26 +14,31 @@ function addToCart(){
     
     if (existingItem){
         existingItem.quantity = (parseInt(existingItem.quantity)) + quantity;
-        console.log(`Quanity of ${name} has been updated`);
     } else {
         cart.push({sku, name, quantity, image});
-        console.log(`${quantity} of ${name} added to cart`);
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
+    updateCartBadge();
     
-}
-
-function seeCart(){
-    cart = JSON.parse(localStorage.getItem("cart"));
-    console.log(cart);
-
-}
-
-function emptyCart(){
-    localStorage.setItem("cart", JSON.stringify([]));
 }
 
 const addToCartButton = document.querySelector('.add-to-cart-btn');
 
 addToCartButton.addEventListener('click', addToCart);
+
+document.querySelectorAll('.quantity-input').forEach(input => {
+    input.addEventListener('blur', () => {
+        const max = parseInt(input.getAttribute('max'), 10);
+        const min = parseInt(input.getAttribute('min'), 10);
+        let value = parseInt(input.value, 10);
+
+        if (isNaN(value) || value < min) {
+            value = min;
+        } else if (value > max) {
+            value = max;
+        }
+
+        input.value = value;
+    });
+});
