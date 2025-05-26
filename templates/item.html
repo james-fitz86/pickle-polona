@@ -65,7 +65,9 @@
                         max="{{ product.batches | map(attribute='stock_quantity') | sum }}"
                         data-product-sku="{{ product.sku }}"
                         data-product-name="{{ product.name }}"
-                        data-product-image="{{ url_for('static', filename=product.image_main) }}">
+                        data-product-image="{{ url_for('static', filename=product.image_main) }}"
+                        data-max-stock="{{ product.batches | map(attribute='stock_quantity') | sum }}"
+                        data-price="{{ product.price }}">
                 </div>
                 <a href="{{ url_for('store.storefront') }}" class="btn btn-outline-secondary">Back to Store</a>
                 <button class="btn btn-primary add-to-cart-btn" data-product-sku="{{ product.sku }}">Add to Cart
