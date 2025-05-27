@@ -23,3 +23,8 @@ def item(product_sku):
 def cart():
     """Shopping Cart page for the app"""
     return render_template("cart.html")
+
+@store.route('/checkout')
+def checkout():
+    """Checkout page for placing an order"""
+    return render_template("checkout.html")
