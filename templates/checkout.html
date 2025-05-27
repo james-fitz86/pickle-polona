@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block meta %} 
+        
+{% endblock %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block main %}
+    <h1>Checkout</h1>
+    <div class="container my-4 text-center">
+        <h2>Order Summary:</h2>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Item</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody id="cart-items-container">
+                </tbody>
+            </table>
+        </div>
+        <h2 id="total-price">Total: €0.00</h2>
+        <div class="d-flex justify-content-center gap-3 flex-wrap"></div>
+            <a href="{{ url_for('store.cart') }}" class="btn btn-outline-secondary">Back to Cart</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_script %}
+<script src="{{ url_for('static', filename='js/checkout.js') }}"></script>
+<script>
+displayCartItems();
+</script>
+{% endblock %}
