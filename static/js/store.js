@@ -25,7 +25,6 @@ function addToCart(){
         existingItem.quantity = (parseInt(existingItem.quantity)) + quantity;
     } else {
         cart.push({sku, name, quantity, image, maxStock, price, subtotal});
-        console.log(price);
     }
 
     localStorage.setItem("cart", JSON.stringify(cart));
