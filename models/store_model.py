@@ -1,12 +1,21 @@
 from extensions import db
 from datetime import datetime
 from sqlalchemy.orm import relationship
+from sqlalchemy import Enum
+import enum
+
+class OrderStatus(enum.Enum):
+    pending = "pending"
+    fulfilled = "fulfilled"
+    shipped = "shipped"
 
 class Order(db.Model):
     __tablename__ = 'orders'
 
     id = db.Column(db.Integer, primary_key=True)
     order_reference = db.Column(db.String(20), unique=True, nullable=False, default=lambda: f"ORD-{int(datetime.utcnow().timestamp())}")
+
+    status = db.Column(Enum(OrderStatus), default=OrderStatus.pending, nullable=False)
 
     first_name = db.Column(db.String(50), nullable=False)
     surname = db.Column(db.String(50), nullable=False)
