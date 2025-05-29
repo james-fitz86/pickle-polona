@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block meta %} 
+        
+{% endblock %}
+
+{% block title %}Order Success{% endblock %}
+
+{% block main %}
+            <div class="container my-4 text-center">
+                <h2>Thank You!</h2>
+                <p>Your order has sucessfully been placed, we will be in touch shortly with confirmation.</p>
+            </div>
+            
+{% endblock %}
+
+{% block extra_script %}
+<script>
+    localStorage.removeItem("cart");
+</script>
+{% endblock %}
