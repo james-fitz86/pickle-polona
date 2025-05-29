@@ -37,3 +37,15 @@ function calculateTotal(){
     
     totalPrice.innerText = `Total: €${total.toFixed(2)}`;
 }
+
+const fullCart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  document.getElementById("checkout-form").addEventListener("submit", () => {
+    const minimalCart = fullCart.map(item => ({
+      product_sku: item.sku,
+      quantity: item.quantity,
+      price: item.price
+    }));
+    document.getElementById("cart-json").value = JSON.stringify(minimalCart);
+    console.log(minimalCart);
+  });
