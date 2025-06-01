@@ -73,9 +73,16 @@ def products():
 @admin.route('/orders')
 def orders():
     """Admin page to view/manage orders."""
+    status_filter = request.args.get("status", type=str)
+
     stmt = select(Order).options(selectinload(Order.order_items))
-    orders = db.session.scalars(stmt)
-    return render_template('admin/orders.html', orders=orders)
+
+    if status_filter:
+        stmt = stmt.where(Order.status == OrderStatus(status_filter.lower()))
+
+    stmt = stmt.order_by(Order.created_at.desc())
+    orders = db.session.scalars(stmt).all()
+    return render_template('admin/orders.html', orders=orders, selected_status=status_filter)
 
 @admin.route("/order/<int:id>")
 def order(id):
