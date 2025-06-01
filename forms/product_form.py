@@ -18,7 +18,7 @@ class ProductForm(FlaskForm):
     image_1 = StringField("Image 1 Filename", validators=[Optional(), Length(max=200)])
     image_2 = StringField("Image 2 Filename", validators=[Optional(), Length(max=200)])
     
-    active = BooleanField("Active", default=True)
+    active = BooleanField("Active", default=True, validators=[Optional()])
     packs_per_box = IntegerField("Packs Per Box", validators=[InputRequired()])
 
     submit = SubmitField("Add Product")
