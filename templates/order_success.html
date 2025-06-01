@@ -8,8 +8,9 @@
 
 {% block main %}
             <div class="container my-4 text-center">
-                <h2>Thank You!</h2>
-                <p>Your order has sucessfully been placed, we will be in touch shortly with confirmation.</p>
+                <h2>Thank you for your order, {{ order.first_name }}!</h2>
+                <p>Your order number is <strong>#{{ order.order_reference }}</strong></p>
+                <p>A confirmation email will be sent to {{ order.email }} shortly.</p>
             </div>
             
 {% endblock %}
