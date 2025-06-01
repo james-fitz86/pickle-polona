@@ -1,9 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, url_for, json, flash
 from sqlalchemy import select
-from models.product import Product
+from models.product import Product, BatchAllocation
 from models.store_model import Order, OrderItem
 from forms.checkout_form import CheckoutForm
 from extensions import db
+from models.admin_model import deduct_stock_by_expiry
 
 store = Blueprint('store', __name__)
 
@@ -64,19 +65,40 @@ def checkout():
         db.session.flush()
 
         for item in cart_items:
+            sku = item["product_sku"]
+            quantity = int(item["quantity"])
+
+            allocations = deduct_stock_by_expiry(sku, quantity)
+            if allocations is None:
+                db.session.rollback()
+                flash(f"Not enough stock for SKU {sku}.", "danger")
+                return redirect(url_for("store.cart"))
+
             order_item = OrderItem(
                 order_id=new_order.id,
-                product_sku=item["product_sku"],
-                quantity=item["quantity"]
+                product_sku=sku,
+                quantity=quantity
             )
             db.session.add(order_item)
+            db.session.flush()
 
-        db.session.commit()
-        return redirect(url_for("store.success"))
+            for batch_id, qty in allocations:
+                allocation = BatchAllocation(
+                    order_item_id=order_item.id,
+                    batch_id=batch_id,
+                    quantity_deducted=qty
+                )
+                db.session.add(allocation)
+
+            db.session.commit()
+        return redirect(url_for("store.success", order_id=new_order.id))
 
     return render_template("checkout.html", form=form)
 
 @store.route("/order_success")
 def success():
     """Order Success page"""
-    return render_template("order_success.html")
+    order_id = request.args.get("order_id", type=int)
+
+    order = Order.query.get(order_id)
+    return render_template("order_success.html", order=order)
