@@ -1,0 +1,99 @@
+{% extends "base_admin.html" %}
+
+{% block title %}Order {{ order.order_reference }}{% endblock %}
+
+{% block main %}
+<div class="container my-4">
+    <h1 class="mb-4">Order Summary</h1>
+    {% if order.status == OrderStatus.pending %}
+    <a href="{{ url_for('admin.fulfill_order_view', order_id=order.id) }}" class="btn btn-success mb-4">Fulfill</a>
+    {% elif order.status == OrderStatus.fulfilled %}
+    <a href="{{ url_for('admin.picklist_view', order_id=order.id) }}" class="btn btn-secondary mb-4">Picklist</a>
+     <form method="POST" action="{{ url_for('admin.ship_order_view', order_id=order.id) }}" style="display:inline;">
+        <button type="submit" class="btn btn-primary mb-4">Ship</button>
+    </form>
+    {% endif %}
+    <div class="row mb-4">
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <strong>Order Info</strong>
+                </div>
+                <div class="card-body">
+                    <p><strong>Reference:</strong> {{ order.order_reference }}</p>
+                    <p><strong>Status:</strong> <span class="badge bg-primary">{{ order.status.value.capitalize() }}</span></p>
+                    <p><strong>Created:</strong> {{ order.created_at.strftime("%H:%M %d/%m/%Y") }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <strong>Customer Info</strong>
+                </div>
+                <div class="card-body">
+                    <p><strong>Name:</strong> {{ order.first_name }} {{ order.surname }}</p>
+                    <p><strong>Email:</strong> <a href="mailto:{{ order.email }}">{{ order.email }}</a></p>
+                    <p><strong>Phone:</strong> {{ order.phone_number }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-dark text-white">
+                    <strong>Shipping Address</strong>
+                </div>
+                <div class="card-body">
+                    <p>
+                        {{ order.address_line1 }}<br>
+                        {% if order.address_line2 %}{{ order.address_line2 }}<br>{% endif %}
+                        {{ order.city }}{% if order.county %}, {{ order.county }}{% endif %}<br>
+                        {{ order.postcode }}<br>
+                        {{ order.country }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-secondary text-white">
+            <strong>Items in this Order</strong>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-bordered m-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Product</th>
+                            <th>SKU</th>
+                            <th>Unit Price</th>
+                            <th>Qty</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% set ns = namespace(total=0) %}
+                        {% for item in order.order_items %}
+                        {% set subtotal = item.quantity * item.product.price %}
+                        {% set ns.total = ns.total + subtotal %}
+                        <tr>
+                            <td>{{ item.product.name }}</td>
+                            <td>{{ item.product.sku }}</td>
+                            <td>€{{ "%.2f"|format(item.product.price) }}</td>
+                            <td>{{ item.quantity }}</td>
+                            <td>€{{ "%.2f"|format(subtotal) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    <tfoot>
+                        <tr class="table-dark">
+                            <th colspan="4" class="text-end">Total</th>
+                            <th>€{{ "%.2f"|format(ns.total) }}</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
