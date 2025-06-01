@@ -2,10 +2,12 @@ from flask import Blueprint, render_template, request, redirect, url_for, sessio
 from dotenv import load_dotenv
 from forms.product_form import ProductForm
 from forms.stock_form import StockForm
-from models.product import Product, Batch
+from models.product import Product, Batch, BatchAllocation
+from models.store_model import Order, OrderStatus, OrderItem
+from models.admin_model import fulfill_order, ship_order
 from extensions import db
 from sqlalchemy import select
-from sqlalchemy.orm import selectinload
+from sqlalchemy.orm import selectinload, joinedload
 import os
 
 admin = Blueprint('admin', __name__, url_prefix='/admin')
@@ -70,7 +72,17 @@ def products():
 @admin.route('/orders')
 def orders():
     """Admin page to view/manage orders."""
-    return render_template('admin/orders.html')
+    stmt = select(Order).options(selectinload(Order.order_items))
+    orders = db.session.scalars(stmt)
+    return render_template('admin/orders.html', orders=orders)
+
+@admin.route("/order/<int:id>")
+def order(id):
+    "Admin page to display individual Order"
+    stmt = select(Order).where(Order.id == id)
+    order = db.session.scalars(stmt).first()
+    order_items = order.order_items
+    return render_template("admin/order.html", order=order, order_items=order_items, OrderStatus=OrderStatus)
 
 @admin.route('/stock_batches')
 def stock_batches():
@@ -212,3 +224,76 @@ def delete_product_batch(id, product_sku):
     flash(f"Deleted batch with ID: {batch.id}")
 
     return redirect(url_for("admin.product", product_sku=product.sku))
+
+@admin.route('/orders/<int:order_id>/fulfill')
+def fulfill_order_view(order_id):
+    order = Order.query.options(
+        joinedload(Order.order_items)
+        .joinedload(OrderItem.batch_allocations)
+        .joinedload(BatchAllocation.batch)
+    ).get_or_404(order_id)
+
+    try:
+        from models.admin_model import fulfill_order
+        picklist = fulfill_order(order)
+
+        skus = [item.product_sku for item in order.order_items]
+        product_names = {
+        product.sku: product.name
+        for product in Product.query.filter(Product.sku.in_(skus)).all()
+        }
+
+        return render_template("admin/picklist.html", order=order, picklist=picklist, product_names=product_names)
+    
+    except ValueError as e:
+        flash(str(e), "danger")
+        return redirect(url_for("admin.order", id=order.id))
+    
+@admin.route('/orders/<int:order_id>/picklist')
+def picklist_view(order_id):
+    order = Order.query.options(
+        joinedload(Order.order_items)
+        .joinedload(OrderItem.batch_allocations)
+        .joinedload(BatchAllocation.batch)
+    ).get_or_404(order_id)
+
+    if order.status != OrderStatus.fulfilled:
+        flash("Picklist available only for fulfilled orders.", "warning")
+        return redirect(url_for("admin.order", id=order.id))
+
+    picklist = []
+    for item in order.order_items:
+        item_info = {
+            "product_sku": item.product_sku,
+            "quantity": item.quantity,
+            "allocations": []
+        }
+        for allocation in item.batch_allocations:
+            item_info["allocations"].append({
+                "batch_id": allocation.batch_id,
+                "quantity": allocation.quantity_deducted,
+                "location": allocation.batch.stock_location
+            })
+        picklist.append(item_info)
+    
+    skus = [item.product_sku for item in order.order_items]
+    product_names = {
+        product.sku: product.name
+        for product in Product.query.filter(Product.sku.in_(skus)).all()
+    }
+
+
+    return render_template("admin/picklist.html", order=order, picklist=picklist, product_names=product_names)
+
+@admin.route('/orders/<int:order_id>/ship', methods=["POST"])
+def ship_order_view(order_id):
+    order = Order.query.get_or_404(order_id)
+
+    try:
+        from models.admin_model import ship_order
+        ship_order(order)
+        flash("Order marked as shipped.", "success")
+    except ValueError as e:
+        flash(str(e), "danger")
+
+    return redirect(url_for("admin.order", id=order.id))
