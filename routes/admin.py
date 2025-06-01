@@ -65,14 +65,22 @@ def logout():
 
 @admin.route('/products')
 def products():
-    """Admin page to view/manage products."""
+    """Admin page to view/manage products and filter by active."""
+    active_paramater= request.args.get("active")
     stmt = select(Product).options(selectinload(Product.batches))
-    products = db.session.scalars(stmt)
-    return render_template('admin/products.html', products=products)
+
+    active_filter = None
+
+    if active_paramater is not None:
+        active_filter = active_paramater.lower() == ("true")
+        stmt = stmt.where(Product.active == active_filter)
+
+    products = db.session.scalars(stmt).all()
+    return render_template('admin/products.html', products=products, selected_active=active_paramater)
 
 @admin.route('/orders')
 def orders():
-    """Admin page to view/manage orders."""
+    """Admin page to view/manage orders and filter by status."""
     status_filter = request.args.get("status", type=str)
 
     stmt = select(Order).options(selectinload(Order.order_items))
