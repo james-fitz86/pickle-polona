@@ -3,5 +3,35 @@
 {% block title %}Store Orders{% endblock %}
     
 {% block main %}
-<h1>Store Orders</h1>
+<div class="container my-4">
+    <h1 class="mb-4">Orders</h1>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Order Ref</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.order_reference }}</td>
+                    <td>{{ order.created_at.strftime("%H:%M %d/%m/%Y") }}</td>
+                    <td>{{ order.first_name }} {{ order.surname }}</td>
+                    <td>{{ order.status.value.capitalize() }}</td>
+                    <td>
+                        <a href="{{ url_for('admin.order', id=order.id) }}" class="btn btn-primary btn-sm">
+                            View
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}
