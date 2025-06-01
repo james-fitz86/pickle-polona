@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash
+from datetime import date
 from dotenv import load_dotenv
 from forms.product_form import ProductForm
 from forms.stock_form import StockForm
@@ -207,9 +208,16 @@ def edit_product_batch(id, product_sku):
 def delete_batch(id):
     """Admin page to delete individual Batch from Batches page"""
     batch = db.session.scalar(select(Batch).where(Batch.id == id))
+
+    today = date.today()
+
+    if batch.stock_quantity > 0 and batch.expiry_date >= today:
+        flash("You cannot delete a batch with usable stock", "warning")
+        return redirect(url_for("admin.stock_batches"))
+    
     db.session.delete(batch)
     db.session.commit()
-    flash(f"Deleted batch with ID: {batch.id}")
+    flash(f"Deleted batch with ID: {batch.id}", "success")
 
     return redirect(url_for("admin.stock_batches"))
 
