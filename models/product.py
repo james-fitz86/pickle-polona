@@ -38,8 +38,14 @@ class Batch(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     stock_quantity = db.mapped_column(db.Integer, nullable=False, default=0)
     stock_location = db.mapped_column(db.String(100))
-    expiry_date = db.mapped_column(db.Date)
+    expiry_date = db.mapped_column(db.Date, nullable=False)
     product_sku = db.mapped_column(db.String, db.ForeignKey('products.sku'), nullable=False)
+
+    allocations = db.relationship(
+        'BatchAllocation',
+        back_populates='batch',
+        cascade='all, delete-orphan'
+    )
 
     def __repr__(self):
         return f"<Batch {self.id} - SKU: {self.product_sku}, Qty: {self.stock_quantity}>"
