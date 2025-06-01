@@ -43,3 +43,17 @@ class Batch(db.Model):
 
     def __repr__(self):
         return f"<Batch {self.id} - SKU: {self.product_sku}, Qty: {self.stock_quantity}>"
+    
+class BatchAllocation(db.Model):
+    __tablename__ = 'batch_allocations'
+
+    id = db.Column(db.Integer, primary_key=True)
+    order_item_id = db.Column(db.Integer, db.ForeignKey('order_items.id'), nullable=False)
+    batch_id = db.Column(db.Integer, db.ForeignKey('batches.id'), nullable=False)
+    quantity_deducted = db.Column(db.Integer, nullable=False)
+
+    batch = db.relationship('Batch')
+    order_item = db.relationship('OrderItem', backref='batch_allocations')
+
+    def __repr__(self):
+        return f"<BatchAllocation OrderItem {self.order_item_id}, Batch {self.batch_id}, Qty {self.quantity_deducted}>"
