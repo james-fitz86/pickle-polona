@@ -103,10 +103,21 @@ def order(id):
 @admin.route('/stock_batches')
 def stock_batches():
     """Admin page to view/manage stock batches."""
+    stock_filter = request.args.get('stock')
+
     stmt = select(Batch)
-    batches = db.session.scalars(stmt)
-    batches_sorted = sorted(batches, key=lambda b: b.expiry_date)
-    return render_template('admin/stock_batches.html', batches=batches_sorted)
+    all_batches = db.session.scalars(stmt)
+
+    if stock_filter == 'remaining':
+        filtered_batches = [ b for b in all_batches if b.stock_quantity > 0]
+    elif stock_filter == 'none':
+        filtered_batches = [ b for b in all_batches if b.stock_quantity == 0]
+    else:
+        filtered_batches = all_batches
+
+    batches_sorted = sorted(filtered_batches, key=lambda b: b.expiry_date)
+
+    return render_template('admin/stock_batches.html', batches=batches_sorted, selected_stock=stock_filter)
 
 @admin.route('/messages')
 def messages():
