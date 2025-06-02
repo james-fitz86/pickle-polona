@@ -44,12 +44,17 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ message.subject }}</h5>
                             <h6 class="card-subtitle mb-2 text-muted">
-                                From: {{ message.name }} | {{ message.email }}
+                                From: {{ message.name }} |<a href="mailto:{{ message.email }}?subject=RE: {{ message.subject | urlencode }}&body={{ ('\n\n---Original Message:\n' + message.message) | urlencode }}">{{ message.email }}</a>
                             </h6>
                             <p class="card-text">{{ message.message }}</p>
                             <p class="text-muted small mb-0">
                                 Sent: {{ message.submitted_at.strftime("%d %b %Y, %H:%M") }}
                             </p>
+                            <div class="d-flex justify-content-end mt-3">
+                                <form method="POST" action="{{ url_for('admin.delete_message', id=message.id) }}">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
