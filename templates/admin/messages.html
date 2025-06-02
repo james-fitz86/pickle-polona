@@ -1,7 +1,76 @@
 {% extends 'base_admin.html' %}
 
-{% block title %}Contact Messgaes{% endblock %}
-    
+{% block title %}Contact Messages{% endblock %}
+
 {% block main %}
-<h1>Contact Messages</h1>
+<div class="container my-4">
+    <h1 class="mb-4">Contact Messages</h1>
+
+    {% if messages|length == 0 %}
+        <p class="text-muted">No messages found.</p>
+    {% else %}
+        {% macro pagination_bar(page, total_pages) %}
+        <nav aria-label="Message page navigation">
+            <ul class="pagination justify-content-center mb-4">
+                {% if page > 0 %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('admin.messages', page=page - 1) }}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {% for p in range(0, total_pages) %}
+                    <li class="page-item {% if p == page %}active{% endif %}">
+                        <a class="page-link" href="{{ url_for('admin.messages', page=p) }}">{{ p + 1 }}</a>
+                    </li>
+                {% endfor %}
+
+                {% if page < total_pages - 1 %}
+                    <li class="page-item">
+                        <a class="page-link" href="{{ url_for('admin.messages', page=page + 1) }}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+        {% endmacro %}
+        {{ pagination_bar(page, total_pages) }}
+        <div class="row row-cols-1 g-4">
+            {% for message in messages %}
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ message.subject }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                From: {{ message.name }} | {{ message.email }}
+                            </h6>
+                            <p class="card-text">{{ message.message }}</p>
+                            <p class="text-muted small mb-0">
+                                Sent: {{ message.submitted_at.strftime("%d %b %Y, %H:%M") }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="d-flex justify-content-between align-items-center mt-4">
+            {% if page > 0 %}
+                <a href="{{ url_for('admin.messages', page=page - 1) }}" class="btn btn-outline-secondary">
+                    &laquo; Previous
+                </a>
+            {% else %}
+                <span></span>
+            {% endif %}
+
+            {% if messages|length == config.MESSAGES_PER_PAGE %}
+                <a href="{{ url_for('admin.messages', page=page + 1) }}" class="btn btn-outline-secondary">
+                    Next &raquo;
+                </a>
+            {% endif %}
+        </div>
+        {{ pagination_bar(page, total_pages) }}
+    {% endif %}
+</div>
 {% endblock %}
