@@ -10,7 +10,6 @@ from models.main_model import ContactMessage
 from extensions import db
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload, joinedload
-from config import Config
 import os
 
 admin = Blueprint('admin', __name__, url_prefix='/admin')
@@ -125,7 +124,7 @@ def stock_batches():
 def messages():
     """Admin page to view/manage contact messages with pagination."""
     page = request.args.get('page', 0, type=int)
-    per_page = Config.MESSAGES_PER_PAGE
+    per_page = int(os.getenv("MESSAGES_PER_PAGE", 10))
 
     total_messages = db.session.scalar(
         db.select(db.func.count()).select_from(ContactMessage)
