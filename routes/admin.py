@@ -141,6 +141,18 @@ def messages():
 
     return render_template('admin/messages.html', messages=messages, page=page, total_pages=total_pages)
 
+@admin.route("/message/<int:id>/delete", methods=["POST"])
+def delete_message(id):
+    """Admin route to delete contact messages"""
+    message = ContactMessage.query.get(id)
+
+    if message:
+        db.session.delete(message)
+        db.session.commit()
+        flash(f"Deleted message with ID: {message.id}")
+
+    return redirect(url_for("admin.messages"))
+
 @admin.route('/add_product', methods=["GET", "POST"])
 def add_product():
     """Admin Page to add Products"""
