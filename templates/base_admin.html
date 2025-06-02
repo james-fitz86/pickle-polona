@@ -9,11 +9,16 @@
 </head>
 <body>
     <div id="admin-wrapper">
-        <header class="admin-header">
-            <h1>Admin Dashboard</h1>
-                {% if session.get('username') %}
-                    <p>Hi {{ session['username'] }}</p>
-                {% endif %}
+        <header class="admin-header d-flex justify-content-between align-items-center p-3 mb-4 border-bottom bg-light">
+            <h1 class="h4 mb-0">
+                <a href="{{ url_for('admin.dashboard') }}" class="text-decoration-none text-dark">
+                    Admin Dashboard
+                </a>
+            </h1>
+
+            {% if session.get('username') %}
+                <p class="mb-0 text-muted">Hi {{ session['username'] }}</p>
+            {% endif %}
         </header>
         {% if session.get('username') %}
             <nav class="admin-nav">
