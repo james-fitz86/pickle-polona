@@ -6,9 +6,11 @@ from forms.stock_form import StockForm
 from models.product import Product, Batch, BatchAllocation
 from models.store_model import Order, OrderStatus, OrderItem
 from models.admin_model import fulfill_order, ship_order
+from models.main_model import ContactMessage
 from extensions import db
 from sqlalchemy import select
 from sqlalchemy.orm import selectinload, joinedload
+from config import Config
 import os
 
 admin = Blueprint('admin', __name__, url_prefix='/admin')
@@ -121,8 +123,24 @@ def stock_batches():
 
 @admin.route('/messages')
 def messages():
-    """Admin page to view/manage contact messages."""
-    return render_template('admin/messages.html')
+    """Admin page to view/manage contact messages with pagination."""
+    page = request.args.get('page', 0, type=int)
+    per_page = Config.MESSAGES_PER_PAGE
+
+    total_messages = db.session.scalar(
+        db.select(db.func.count()).select_from(ContactMessage)
+    )
+    total_pages = (total_messages + per_page - 1) // per_page 
+
+    stmt = (
+        select(ContactMessage)
+        .order_by(ContactMessage.submitted_at.desc())
+        .limit(per_page)
+        .offset(page * per_page)
+    )
+    messages = db.session.scalars(stmt).all()
+
+    return render_template('admin/messages.html', messages=messages, page=page, total_pages=total_pages)
 
 @admin.route('/add_product', methods=["GET", "POST"])
 def add_product():
