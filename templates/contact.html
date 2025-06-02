@@ -7,5 +7,31 @@
 {% block title %}Contact{% endblock %}
 
 {% block main %}
-            <h1>Contact Pickle Polona</h1>
+<div class="container my-4">
+    <h1 class="mb-4">Contact Pickle Polona</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <div class="mb-3">
+            {{ form.name.label(class="form-label") }}
+            {{ form.name(class="form-control", size=40) }}
+        </div>
+        <div class="mb-3">
+            {{ form.email.label(class="form-label") }}
+            {{ form.email(class="form-control", size=40) }}
+        </div>
+        <div class="mb-3">
+            {{ form.subject.label(class="form-label") }}
+            {{ form.subject(class="form-control", size=50) }}
+        </div>
+        <div class="mb-3">
+            {{ form.message.label(class="form-label") }}
+            {{ form.message(class="form-control", rows=5, cols=40) }}
+        </div>
+        <div class="mb-4">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+</div>
+
 {% endblock %}
