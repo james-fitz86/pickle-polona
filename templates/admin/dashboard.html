@@ -3,7 +3,114 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block main %}
-<a href="{{ url_for('admin.add_product') }}">
-    <button type="button">Add Product</button>
-</a>
+<div class="container my-5">
+    <h1 class="mb-4">Admin Dashboard</h1>
+
+    <p class="lead">
+        This dashboard gives you access to all admin features for managing the homemade pickle store.
+        Use the sections below to navigate and perform actions like managing orders, stock, products, and reviewing customer messages.
+    </p>
+
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+
+        <div class="col">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Orders</h5>
+                    <p class="card-text">
+                        View and manage all customer orders. Filter by status, view order details, generate picklists, and mark orders as shipped.
+                    </p>
+                    <a href="{{ url_for('admin.orders') }}" class="btn btn-outline-primary">Manage Orders</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Products</h5>
+                    <p class="card-text">
+                        Add, edit, and manage all products. Control visibility with the active status and update images, descriptions, and pricing.
+                    </p>
+                    <a href="{{ url_for('admin.products') }}" class="btn btn-outline-primary">Manage Products</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Stock Batches</h5>
+                    <p class="card-text">
+                        Track and manage inventory by batch. View expiry dates, filter by availability, add new stock batches with locations and delete expired or depleted batches.
+                    </p>
+                    <a href="{{ url_for('admin.stock_batches') }}" class="btn btn-outline-primary">Manage Stock</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">Contact Messages</h5>
+                    <p class="card-text">
+                        Review messages submitted by users via the contact form. Messages are paginated for easier browsing.
+                    </p>
+                    <a href="{{ url_for('admin.messages') }}" class="btn btn-outline-primary">View Messages</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <h4 class="mb-3">Additional Features</h4>
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+
+            <div class="col">
+                <div class="card border-0 bg-light h-100">
+                    <div class="card-body">
+                        <h6 class="card-title">Login Protection</h6>
+                        <p class="card-text">All admin routes are protected. Only users with correct credentials stored in the `.env` file can access this section.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card border-0 bg-light h-100">
+                    <div class="card-body">
+                        <h6 class="card-title">Session Handling</h6>
+                        <p class="card-text">Authenticated admin sessions persist across pages, and users can log out securely from any point.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card border-0 bg-light h-100">
+                    <div class="card-body">
+                        <h6 class="card-title">Picklist Generation</h6>
+                        <p class="card-text">For fulfilled orders, a picklist is generated based on real-time stock allocation from different batches.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-0 bg-light h-100">
+                    <div class="card-body">
+                        <h6 class="card-title">Pagination</h6>
+                        <p class="card-text">Messages are paginated using a per-page value from environment variables to ensure performance and scalability.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card border-0 bg-light h-100">
+                    <div class="card-body">
+                        <h6 class="card-title">Environment Configuration</h6>
+                        <p class="card-text">Admin settings like usernames, passwords, and pagination values are managed via environment variables for security and flexibility.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 {% endblock %}
