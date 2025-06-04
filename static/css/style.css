@@ -39,3 +39,13 @@ main img{
 .custom-shadow-olive{
   box-shadow: 0 0.5rem 1rem rgba(73, 74, 34, 0.5);
 }
+.carousel-inner{
+    max-width: 500px;
+    margin: auto;
+  }
+.carousel-inner img{
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
