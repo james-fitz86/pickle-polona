@@ -112,5 +112,11 @@
 
         </div>
     </div>
+    <div class="alert alert-warning text-center mt-4">
+        <p class="mb-0">
+            To test the 500 error page, click 
+            <a href="{{ url_for('main.raise_500_error') }}" class="alert-link">here</a>.
+        </p>
+    </div>
 </div>
 {% endblock %}
