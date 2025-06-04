@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session, flash
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash, abort
 from datetime import date
 from dotenv import load_dotenv
 from forms.product_form import ProductForm
@@ -22,6 +22,9 @@ admin_password = os.getenv("ADMIN_PASSWORD")
 def restrict_admin_pages():
     allowed_routes = ['admin.login', 'admin.login_action', 'admin.logout']
     if 'username' not in session and request.endpoint not in allowed_routes:
+
+        if request.path == '/admin' or request.path == '/admin/':
+            return abort(404)
         
         session['next'] = request.path
         return redirect(url_for("admin.login"))
