@@ -3,6 +3,7 @@ from extensions import db
 from routes import blueprints
 from dotenv import load_dotenv
 
+load_dotenv()
 
 def create_app():
     app = Flask(__name__)
@@ -13,6 +14,9 @@ def create_app():
 
     for bp in blueprints:
         app.register_blueprint(bp)
+
+    from routes.main import register_error_handlers
+    register_error_handlers(app)
     
     return app
 
