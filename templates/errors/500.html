@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Unexpected Error{% endblock %}
+    
+{% block main %}
+    <div class="container d-flex flex-column align-items-center justify-content-center text-center py-5">
+    <div class="alert alert-warning w-100 w-md-75 w-lg-50" role="alert">
+        <h1 id="main-content" class="display-4" aria-live="assertive">Unexpected Error</h1>
+        <p class="lead" aria-describedby="error-message">
+            Apologies for the inconvenience, there has been an unexpected error.
+        </p>
+        <p id="error-message">
+            The administrator has been notified. Please try again later.
+        </p>
+        <a href="{{ url_for('main.home') }}" class="btn btn-outline-warning mt-3" aria-label="Return to home page">
+            Return to home page
+        </a>
+    </div>
+</div>
+{% endblock %}
