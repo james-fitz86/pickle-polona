@@ -1,11 +1,61 @@
 {% extends "base.html" %}
 
-{% block meta %} 
-        
+{% block meta %}
+    <meta name="description" content="Learn the story behind Pickle Polona — from garden to jar. Discover our values and what drives us to make wholesome, sustainable food." />
 {% endblock %}
 
 {% block title %}About{% endblock %}
 
 {% block main %}
-            <h1>About Pickle Polona</h1>
+<div class="container py-5">
+    <h1 class="mb-4 text-center">About Pickle Polona</h1>
+
+    <!-- Your Story -->
+    <section class="mb-5">
+        <h2 class="h4">Our Story</h2>
+        <p>
+            Pickle Polona began {{ years_since }} year{{ 's' if years_since != 1 else '' }} ago as a small passion project in our garden and home kitchen. What started as a love for preserving seasonal vegetables grew into a mission to share wholesome, flavorful jars with our community.
+        </p>
+        <p>
+            Each jar reflects our belief in simple, sustainable living — using what we grow, supporting local, and making everything by hand, one batch at a time.
+        </p>
+    </section>
+
+    <!-- Mission / Values -->
+    <section class="mb-5">
+        <h2 class="h4">Our Values</h2>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">🌱 Grow locally, preserve naturally</li>
+            <li class="list-group-item">🌍 Inclusive for all dietary needs</li>
+            <li class="list-group-item">♻️ Low-waste, eco-friendly packaging</li>
+        </ul>
+    </section>
+
+    <!-- Personal Connection -->
+    <section class="mb-5">
+        <h2 class="h4">Meet the Maker</h2>
+        <p>
+            Every batch is made with care, inspired by the seasons and nurtured by hand. From early morning garden harvests to late-night labeling sessions, you're supporting more than a product — you're joining a story of love, patience, and purpose.
+        </p>
+        <!-- Optional image placeholders -->
+        <!-- <img src="{{ url_for('static', filename='images/kitchen.jpg') }}" class="img-fluid rounded my-3" alt="Our kitchen"> -->
+    </section>
+
+    <!-- Testimonials -->
+    <section>
+        <h2 class="h4">What Our Customers Say</h2>
+
+        <blockquote class="blockquote">
+            <p class="mb-0">“Absolutely delicious — reminds me of my grandmother’s pantry. You can taste the love in every bite.”</p>
+            <br>
+            <footer class="blockquote-footer">Zofia Kowalska</footer>
+        </blockquote>
+
+        <blockquote class="blockquote mt-3">
+            <p class="mb-0">“Takes me straight back to summers in Poland. These pickles are the real deal — fresh, tangy, and full of tradition.”</p>
+            <br>
+            <footer class="blockquote-footer">Piotr Nowak</footer>
+        </blockquote>
+    </section>
+</div>
 {% endblock %}
