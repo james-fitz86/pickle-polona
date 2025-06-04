@@ -1,5 +1,5 @@
 from extensions import db
-from datetime import datetime
+from datetime import datetime, date
 
 class ContactMessage(db.Model):
     __tablename__ = 'contact_messages'
@@ -13,3 +13,11 @@ class ContactMessage(db.Model):
 
     def __repr__(self):
         return f"<ContactMessage from {self.name} - {self.email}>"
+
+def years_since_feb_2024():
+    start = date(2024, 2, 1)
+    today = date.today()
+    years = today.year - start.year
+    if (today.month, today.day) < (start.month, start.day):
+        years -= 1
+    return years
