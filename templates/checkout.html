@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
-{% block meta %} 
-        
+{% block meta %}
+    <meta name="description" content="Complete your order with Pickle Polona. Enter your delivery details and review your cart before checkout.">
+    <meta name="robots" content="noindex, nofollow">
 {% endblock %}
 
 {% block title %}Checkout{% endblock %}
@@ -9,8 +10,8 @@
 {% block main %}
     <h1>Checkout</h1>
     <div class="container my-4 text-center">
-        <h2>Order Summary:</h2>
-        <div class="table-responsive">
+        <h2 id="order-summary-heading">Order Summary:</h2>
+        <div class="table-responsive" aria-labelledby="order-summary-heading">
             <table class="table table-striped table-hover align-middle">
                 <thead class="table-dark">
                     <tr>
@@ -24,7 +25,7 @@
                 </tbody>
             </table>
         </div>
-        <h2 id="total-price">Total: €0.00</h2>
+        <h2 id="total-price" aria-live="polite">Total: €0.00</h2>
         <div class="container my-5">
             <h2 class="mb-4">Checkout</h2>
             <form method="POST" action="/checkout" id="checkout-form">
@@ -33,27 +34,27 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         {{ form.first_name.label(class="form-label") }}
-                        {{ form.first_name(class="form-control") }}
+                        {{ form.first_name(class="form-control", required=True) }}
                     </div>
                     <div class="col-md-6">
                         {{ form.surname.label(class="form-label") }}
-                        {{ form.surname(class="form-control") }}
+                        {{ form.surname(class="form-control", required=True) }}
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6">
                         {{ form.email.label(class="form-label") }}
-                        {{ form.email(class="form-control") }}
+                        {{ form.email(class="form-control", required=True) }}
                     </div>
                     <div class="col-md-6">
                         {{ form.phone_number.label(class="form-label") }}
-                        {{ form.phone_number(class="form-control") }}
+                        {{ form.phone_number(class="form-control", required=True) }}
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-12">
                         {{ form.address_line1.label(class="form-label") }}
-                        {{ form.address_line1(class="form-control") }}
+                        {{ form.address_line1(class="form-control", required=True) }}
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -65,7 +66,7 @@
                 <div class="row mb-3">
                     <div class="col-md-4">
                         {{ form.city.label(class="form-label") }}
-                        {{ form.city(class="form-control") }}
+                        {{ form.city(class="form-control", required=True) }}
                     </div>
                     <div class="col-md-4">
                         {{ form.county.label(class="form-label") }}
@@ -73,13 +74,13 @@
                     </div>
                     <div class="col-md-4">
                         {{ form.postcode.label(class="form-label") }}
-                        {{ form.postcode(class="form-control") }}
+                        {{ form.postcode(class="form-control", required=True) }}
                     </div>
                 </div>
                 <div class="row mb-4">
                     <div class="col-md-6">
                         {{ form.country.label(class="form-label") }}
-                        {{ form.country(class="form-control") }}
+                        {{ form.country(class="form-control", required=True) }}
                     </div>
                 </div>
                 <input type="hidden" name="cart_json" id="cart-json">

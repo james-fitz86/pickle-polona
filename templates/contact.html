@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
-{% block meta %} 
-        
+{% block meta %}
+    <meta name="description" content="Get in touch with Pickle Polona to ask about our homemade jars, bulk orders, or delivery options.">
+    <meta name="robots" content="index, follow">
 {% endblock %}
 
 {% block title %}Contact{% endblock %}
@@ -14,19 +15,19 @@
 
         <div class="mb-3">
             {{ form.name.label(class="form-label") }}
-            {{ form.name(class="form-control", size=40) }}
+            {{ form.name(class="form-control", size=40, required=True) }}
         </div>
         <div class="mb-3">
             {{ form.email.label(class="form-label") }}
-            {{ form.email(class="form-control", size=40) }}
+            {{ form.email(class="form-control", size=40, required=True) }}
         </div>
         <div class="mb-3">
             {{ form.subject.label(class="form-label") }}
-            {{ form.subject(class="form-control", size=50) }}
+            {{ form.subject(class="form-control", size=50, required=True) }}
         </div>
         <div class="mb-3">
             {{ form.message.label(class="form-label") }}
-            {{ form.message(class="form-control", rows=5, cols=40) }}
+            {{ form.message(class="form-control", rows=5, cols=40, required=True) }}
         </div>
         <div class="mb-4">
             {{ form.submit(class="btn btn-primary") }}

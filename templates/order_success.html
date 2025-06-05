@@ -1,14 +1,15 @@
 {% extends "base.html" %}
 
-{% block meta %} 
-        
+{% block meta %}
+    <meta name="description" content="Thank you for your order at Pickle Polona! Your order has been successfully received and is being processed.">
+    <meta name="robots" content="noindex, nofollow">
 {% endblock %}
 
 {% block title %}Order Success{% endblock %}
 
 {% block main %}
-            <div class="container my-4 text-center">
-                <h2>Thank you for your order, {{ order.first_name }}!</h2>
+            <div class="container my-4 text-center" role="status" aria-live="polite">
+                <h1 class="h2">Thank you for your order, {{ order.first_name }}!</h2>
                 <p>Your order number is <strong>#{{ order.order_reference }}</strong></p>
                 <p>A confirmation email will be sent to {{ order.email }} shortly.</p>
             </div>

@@ -1,16 +1,21 @@
 {% extends "base.html" %}
 
-{% block meta %} 
-        
+{% block meta %}
+    <meta name="description" content="{{ product.description[:160] }}">
+    <meta name="keywords" content="{{ product.name }}, pickles, preserves, homemade, small batch, food jar">
+    <meta name="author" content="Pickle Polona">
+    <meta name="robots" content="index, follow">
 {% endblock %}
 
 {% block title %}{{ product.name }}{% endblock %}
 
 {% block cart %}
-<div class="d-flex justify-content-end" style="padding:10px;">
+<div class="d-flex justify-content-end" style="padding:10px;" aria-live="polite">
     <a href="/cart" class="position-relative d-inline-block" style="width: 80px; height: 80px;">
-        <img src="/static/images/icons/cart.svg" alt="Cart" style="width: 100%; height: 100%; object-fit: contain;">
-        <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none">
+        <img src="/static/images/icons/cart.svg" alt="Cart Logo" style="width: 100%; height: 100%; object-fit: contain;" aria-hidden="true">
+        <span id="cart-badge" 
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger d-none"
+            aria-label="Number of items in cart">
             0
         </span>
     </a>
@@ -18,7 +23,7 @@
 {% endblock %}
 
 {% block main %}
-<div class="container mt-5">
+<section class="container mt-5" aria-label="Product details for {{ product.name }}">
     <div class="row g-4">
         <div class="col-md-6">
             <div class="mb-3">
@@ -35,47 +40,53 @@
             </div>
         </div>
         <div class="col-md-6 d-flex flex-column">
-            <h1 class="mb-3">{{ product.name }}</h1>
-            <p class="fs-4 text-success fw-semibold">€{{ "%.2f"|format(product.price) }}</p>
-            <div class="mb-3">
-                <h5>Description:</h5>
-                <p>{{ product.description }}</p>
-            </div>
-            {% if product.size %}
-            <div class="mb-3">
-                <h6>Size:</h6>
-                <p>{{ product.size }}</p>
-            </div>
-            {% endif %}
-            {% if product.ingredients %}
-            <div class="mb-3">
-                <h6>Ingredients:</h6>
-                <p>{{ product.ingredients }}</p>
-            </div>
-            {% endif %}
-            <div class="mt-auto">
+            <article aria-labelledby="product-name-{{ product.sku }}">
+                <h1 class="mb-3">{{ product.name }}</h1>
+                <p class="fs-4 text-success fw-semibold">€{{ "%.2f"|format(product.price) }}</p>
                 <div class="mb-3">
-                    <label for="quantity-{{ product.sku }}" class="form-label">Quantity</label>
-                    <input 
-                        type="number" 
-                        id="quantity-{{ product.sku }}" 
-                        class="form-control quantity-input" 
-                        value="1" 
-                        min="1" 
-                        max="{{ product.batches | map(attribute='stock_quantity') | sum }}"
-                        data-product-sku="{{ product.sku }}"
-                        data-product-name="{{ product.name }}"
-                        data-product-image="{{ url_for('static', filename=product.image_main) }}"
-                        data-max-stock="{{ product.batches | map(attribute='stock_quantity') | sum }}"
-                        data-price="{{ product.price }}">
+                    <h5>Description:</h5>
+                    <p>{{ product.description }}</p>
                 </div>
-                <a href="{{ url_for('store.storefront') }}" class="btn btn-outline-secondary">Back to Store</a>
-                <button class="btn btn-primary add-to-cart-btn" data-product-sku="{{ product.sku }}">Add to Cart
-                </button>
-            </div>
+                {% if product.size %}
+                <div class="mb-3">
+                    <h6>Size:</h6>
+                    <p>{{ product.size }}</p>
+                </div>
+                {% endif %}
+                {% if product.ingredients %}
+                <div class="mb-3">
+                    <h6>Ingredients:</h6>
+                    <p>{{ product.ingredients }}</p>
+                </div>
+                {% endif %}
+                <div class="mt-auto">
+                    <div class="mb-3">
+                        <label for="quantity-{{ product.sku }}" class="form-label">Quantity</label>
+                        <input 
+                            type="number" 
+                            id="quantity-{{ product.sku }}" 
+                            class="form-control quantity-input" 
+                            value="1" 
+                            min="1" 
+                            max="{{ product.batches | map(attribute='stock_quantity') | sum }}"
+                            data-product-sku="{{ product.sku }}"
+                            data-product-name="{{ product.name }}"
+                            data-product-image="{{ url_for('static', filename=product.image_main) }}"
+                            data-max-stock="{{ product.batches | map(attribute='stock_quantity') | sum }}"
+                            data-price="{{ product.price }}"
+                            aria-label="Quantity for {{ product.name }}">
+                    </div>
+                    <a href="{{ url_for('store.storefront') }}" class="btn btn-outline-secondary" aria-label="Back to Store page">Back to Store</a>
+                    <button class="btn btn-primary add-to-cart-btn" 
+                            data-product-sku="{{ product.sku }}"
+                            aria-label="Add {{ product.name }} to cart">
+                            Add to Cart
+                    </button>
+                </div>
+            </article>
         </div>
     </div>
-</div>
+</section>
 {% endblock %}
 {% block extra_script %}
 <script src="{{ url_for('static', filename='js/store.js') }}"></script>
