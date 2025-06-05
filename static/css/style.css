@@ -49,3 +49,17 @@ main img{
   display: block;
   object-fit: contain;
 }
+#skiplink a {
+  padding: 6px;
+  position: absolute;
+  top: 0;
+  left: -500px;
+  background-color: #d1d1d1;
+  color: #000000;
+  text-decoration: none;
+  border-bottom-right-radius: 8px;
+}
+#skiplink a:focus{
+  z-index: 10000;
+  left: 0;
+}
