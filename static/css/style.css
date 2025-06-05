@@ -63,3 +63,15 @@ main img{
   z-index: 10000;
   left: 0;
 }
+footer{
+    background-color: #f8f9fa;
+    color: #6c757d;
+    text-align: center;
+    padding: 1rem 0;
+    font-size: 0.9rem;
+    border-top: 1px solid #dee2e6;
+    margin-top: 2rem;
+}
+footer p{
+    margin: 0;
+}

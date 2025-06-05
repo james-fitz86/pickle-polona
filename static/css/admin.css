@@ -66,10 +66,15 @@ body{
 }
 footer{
     background-color: #D1D5DB;
+    padding: 1rem 0;
+    text-align: center;
+    border-top: 1px solid #dee2e6;
+    margin-top: auto;
+    font-size: 0.95rem;
+    color: #374151;
 }
 footer p{
     margin: 0;
-    font-size: 1.2rem;
 }
 .table-container{
   overflow-x: auto;
