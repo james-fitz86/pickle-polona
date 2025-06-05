@@ -9,3 +9,6 @@ __pycache__/
 
 # Ignore specific files
 masterplan.md
+
+#Ignore DS_store files
+*.DS_Store
