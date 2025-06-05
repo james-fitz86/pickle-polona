@@ -1,11 +1,16 @@
 {% extends "base_admin.html" %}
 
+{% block meta %}
+  <meta name="description" content="Admin panel: Edit stock batch for product '{{ batch.product.name }}' (SKU: {{ batch.product_sku }}) in Pickle Polona.">
+{% endblock %}
+
 {% block main %}
 <div class="container my-4">
     <h1 class="mb-4">Edit Stock Batch</h1>
     <p><strong>Product Name: </strong>{{ batch.product.name }}</p>
     <p><strong>Product SKU: </strong>{{ batch.product_sku }}</p>
-    <form method="POST">
+    <h2 class="visually-hidden">Edit Stock Batch Form</h2>
+    <form method="POST" aria-label="Edit stock batch for {{ batch.product.name }}, SKU {{ batch.product_sku }}">
         {{ form.hidden_tag() }}
         <input type="hidden" name="product_sku" value="{{ form.product_sku.data }}">
         <div class="mb-3">
@@ -21,8 +26,11 @@
             {{ form.expiry_date(class="form-control", type="date") }}
         </div>
         <div class="d-flex gap-2">
-            {{ form.submit(class="btn btn-success") }}
-            <a href="{{ url_for('admin.delete_batch', id=batch.id) }}" class="btn btn-danger">
+            {% set aria_label = "Save changes to stock batch for " ~ batch.product.name %}
+            {{ form.submit(class="btn btn-success", aria_label=aria_label) }}
+            <a href="{{ url_for('admin.delete_batch', id=batch.id) }}" 
+                class="btn btn-danger"
+                aria-label="Delete batch for {{ batch.product.name }}, SKU {{ batch.product_sku }}">
                 Delete Batch
             </a>
         </div>

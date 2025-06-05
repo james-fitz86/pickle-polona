@@ -1,5 +1,9 @@
 {% extends 'base_admin.html' %}
 
+{% block meta %}
+  <meta name="description" content="Admin panel: View and delete contact form submissions sent by customers.">
+{% endblock %}
+
 {% block title %}Contact Messages{% endblock %}
 
 {% block main %}
@@ -37,29 +41,35 @@
         </nav>
         {% endmacro %}
         {{ pagination_bar(page, total_pages) }}
-        <div class="row row-cols-1 g-4">
-            {% for message in messages %}
-                <div class="col">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ message.subject }}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">
-                                From: {{ message.name }} |<a href="mailto:{{ message.email }}?subject=RE: {{ message.subject | urlencode }}&body={{ ('\n\n---Original Message:\n' + message.message) | urlencode }}">{{ message.email }}</a>
-                            </h6>
-                            <p class="card-text">{{ message.message }}</p>
-                            <p class="text-muted small mb-0">
-                                Sent: {{ message.submitted_at.strftime("%d %b %Y, %H:%M") }}
-                            </p>
-                            <div class="d-flex justify-content-end mt-3">
-                                <form method="POST" action="{{ url_for('admin.delete_message', id=message.id) }}">
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
+        <section aria-labelledby="messages-section-heading">
+            <h2 id="messages-section-heading" class="visually-hidden">Submitted Contact Messages</h2>
+            <div class="row row-cols-1 g-4">
+                {% for message in messages %}
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ message.subject }}</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    From: {{ message.name }} |<a href="mailto:{{ message.email }}?subject=RE: {{ message.subject | urlencode }}&body={{ ('\n\n---Original Message:\n' + message.message) | urlencode }}">{{ message.email }}</a>
+                                </h6>
+                                <p class="card-text">{{ message.message }}</p>
+                                <p class="text-muted small mb-0">
+                                    Sent: {{ message.submitted_at.strftime("%d %b %Y, %H:%M") }}
+                                </p>
+                                <div class="d-flex justify-content-end mt-3">
+                                    <form method="POST" action="{{ url_for('admin.delete_message', id=message.id) }}">
+                                        <button type="submit" class="btn btn-danger"
+                                                aria-label="Delete message from {{ message.name }} with subject {{ message.subject }}">
+                                            Delete
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
-        </div>
+                {% endfor %}
+            </div>
+        </section>
         <div class="d-flex justify-content-between align-items-center mt-4">
             {% if page > 0 %}
                 <a href="{{ url_for('admin.messages', page=page - 1) }}" class="btn btn-outline-secondary">

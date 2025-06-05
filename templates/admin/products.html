@@ -1,5 +1,9 @@
 {% extends 'base_admin.html' %}
 
+{% block meta %}
+    <meta name="description" content="Admin panel: View and manage all products listed for sale on Pickle Polona.">
+{% endblock %}
+
 {% block title %}Products{% endblock %}
 
 {% block main %}
@@ -12,22 +16,25 @@
     <h1 class="mb-4">Products</h1>
     <div class="row">
         <div class="col-md-3 mb-4">
-            <details>
-                <summary class="btn btn-outline-secondary mb-2">Filter</summary>
-                <div class="list-group">
-                    <a href="{{ url_for('admin.products') }}" class="list-group-item list-group-item-action {% if selected_active is none %}active{% endif %}">
-                        All
-                    </a>
-                    <a href="{{ url_for('admin.products', active='true') }}" class="list-group-item list-group-item-action {% if selected_active == 'true' %}active{% endif %}">
-                        Active
-                    </a>
-                    <a href="{{ url_for('admin.products', active='false') }}" class="list-group-item list-group-item-action {% if selected_active == 'false' %}active{% endif %}">
-                        Inactive
-                    </a>
-                </div>
-            </details>
+            <nav aria-label="Product status filter">    
+                <details>
+                    <summary class="btn btn-outline-secondary mb-2">Filter</summary>
+                    <div class="list-group">
+                        <a href="{{ url_for('admin.products') }}" class="list-group-item list-group-item-action {% if selected_active is none %}active{% endif %}">
+                            All
+                        </a>
+                        <a href="{{ url_for('admin.products', active='true') }}" class="list-group-item list-group-item-action {% if selected_active == 'true' %}active{% endif %}">
+                            Active
+                        </a>
+                        <a href="{{ url_for('admin.products', active='false') }}" class="list-group-item list-group-item-action {% if selected_active == 'false' %}active{% endif %}">
+                            Inactive
+                        </a>
+                    </div>
+                </details>
+            </nav>  
         </div>
-        <div class="table-responsive">
+        <h2 class="visually-hidden">Product Table</h2>
+        <div class="table-responsive" aria-label="List of products with descriptions and stock levels">
             <table class="table table-striped table-hover align-middle">
                 <thead class="table-dark">
                     <tr>
@@ -44,7 +51,9 @@
                         <td>{{ product.description }}</td>
                         <td>{{ product.batches | map(attribute='stock_quantity') | sum }}</td>
                         <td>
-                            <a href="{{ url_for('admin.product', product_sku=product.sku) }}" class="btn btn-primary btn-sm">
+                            <a href="{{ url_for('admin.product', product_sku=product.sku) }}" 
+                                class="btn btn-primary btn-sm"
+                                aria-label="View details for {{ product.name }}">
                                 View
                             </a>
                         </td>

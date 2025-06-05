@@ -1,82 +1,89 @@
 {% extends "base_admin.html" %}
 
+{% block meta %}
+  <meta name="description" content="Picklist breakdown for fulfilling Order {{ order.order_reference }} in the Pickle Polona admin panel. Includes item quantities and stock locations.">
+{% endblock %}
+
 {% block title %}Picklist - {{ order.order_reference }}{% endblock %}
 
 {% block main %}
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h2>Picklist for Order {{ order.order_reference }}</h2>
-    <button class="btn btn-outline-primary" onclick="window.print()">🖨 Print</button>
-</div>
-<div class="row mb-4">
-        <div class="col-md-6 mb-4">
-            <div class="card shadow-sm">
-                <div class="card-header bg-dark text-white">
-                    <strong>Order Info</strong>
-                </div>
-                <div class="card-body">
-                    <p><strong>Reference:</strong> {{ order.order_reference }}</p>
-                    <p><strong>Created:</strong> {{ order.created_at.strftime("%H:%M %d/%m/%Y") }}</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 mb-4">
-            <div class="card shadow-sm">
-                <div class="card-header bg-dark text-white">
-                    <strong>Customer Info</strong>
-                </div>
-                <div class="card-body">
-                    <p><strong>Name:</strong> {{ order.first_name }} {{ order.surname }}</p>
-                    <p><strong>Email:</strong> <a href="mailto:{{ order.email }}">{{ order.email }}</a></p>
-                    <p><strong>Phone:</strong> {{ order.phone_number }}</p>
+<section aria-labelledby="picklist-heading">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 id="picklist-heading">Picklist for Order {{ order.order_reference }}</h2>
+        <button class="btn btn-outline-primary" onclick="window.print()" aria-label="Print this picklist">🖨 Print</button>
+    </div>
+    <div class="row mb-4">
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-dark text-white">
+                        <strong>Order Info</strong>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Reference:</strong> {{ order.order_reference }}</p>
+                        <p><strong>Created:</strong> {{ order.created_at.strftime("%H:%M %d/%m/%Y") }}</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-12 mb-4">
-            <div class="card shadow-sm">
-                <div class="card-header bg-dark text-white">
-                    <strong>Shipping Address</strong>
-                </div>
-                <div class="card-body">
-                    <p>
-                        {{ order.address_line1 }}<br>
-                        {% if order.address_line2 %}{{ order.address_line2 }}<br>{% endif %}
-                        {{ order.city }}{% if order.county %}, {{ order.county }}{% endif %}<br>
-                        {{ order.postcode }}<br>
-                        {{ order.country }}
-                    </p>
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-dark text-white">
+                        <strong>Customer Info</strong>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Name:</strong> {{ order.first_name }} {{ order.surname }}</p>
+                        <p><strong>Email:</strong> <a href="mailto:{{ order.email }}">{{ order.email }}</a></p>
+                        <p><strong>Phone:</strong> {{ order.phone_number }}</p>
+                    </div>
                 </div>
             </div>
-        </div>
-</div>
-<div class="col-12 mb-4">
-    <div class="card shadow-sm">
-        <div class="card-header bg-dark text-white">
-            <strong>Items to Pick</strong>
-        </div>
-        <div class="card-body p-0">
-            {% for item in picklist %}
-                <div class="border-bottom p-3">
-                    <h5 class="mb-2"><span class="fw-bold">{{ product_names[item.product_sku] }}</span>-{{ item.product_sku }} <span class="text-muted">(Total: {{ item.quantity }})</span></h5>
-                    <table class="table table-bordered table-sm mb-0">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Location</th>
-                                <th>Quantity to Pick</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for allocation in item.allocations %}
+            <div class="col-12 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-dark text-white">
+                        <strong>Shipping Address</strong>
+                    </div>
+                    <div class="card-body">
+                        <p>
+                            {{ order.address_line1 }}<br>
+                            {% if order.address_line2 %}{{ order.address_line2 }}<br>{% endif %}
+                            {{ order.city }}{% if order.county %}, {{ order.county }}{% endif %}<br>
+                            {{ order.postcode }}<br>
+                            {{ order.country }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <div class="col-12 mb-4">
+        <h2 class="visually-hidden">Product picklist with locations</h2>
+        <div class="card shadow-sm">
+            <div class="card-header bg-dark text-white">
+                <strong>Items to Pick</strong>
+            </div>
+            <div class="card-body p-0">
+                {% for item in picklist %}
+                    <div class="border-bottom p-3">
+                        <h5 class="mb-2"><span class="fw-bold">{{ product_names[item.product_sku] }}</span>-{{ item.product_sku }} <span class="text-muted">(Total: {{ item.quantity }})</span></h5>
+                        <table class="table table-bordered table-sm mb-0" aria-label="Pick locations for SKU {{ item.product_sku }}">
+                            <thead class="table-light">
                                 <tr>
-                                    <td>{{ allocation.location }}</td>
-                                    <td>{{ allocation.quantity }}</td>
+                                    <th>Location</th>
+                                    <th>Quantity to Pick</th>
                                 </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            {% endfor %}
+                            </thead>
+                            <tbody>
+                                {% for allocation in item.allocations %}
+                                    <tr>
+                                        <td>{{ allocation.location }}</td>
+                                        <td>{{ allocation.quantity }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
-</div>
-<a href="{{ url_for('admin.order', id=order.id) }}" class="btn btn-secondary mt-4">← Back to Order</a>
+    <a href="{{ url_for('admin.order', id=order.id) }}" class="btn btn-secondary mt-4">← Back to Order</a>
+</section>
 {% endblock %}

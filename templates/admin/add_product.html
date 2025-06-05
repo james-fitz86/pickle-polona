@@ -1,11 +1,16 @@
 {% extends 'base_admin.html' %}
 
+{% block meta %}
+  <meta name="description" content="Admin panel: Add a new product to the Pickle Polona store.">
+{% endblock %}
+
 {% block title %}Add Product{% endblock %}
     
 {% block main %}
 <div class="container my-4">
     <h1 class="mb-4">Add Product</h1>
-    <form method="POST">
+    <h2 class="visually-hidden">Add New Product Form</h2>
+    <form method="POST" aria-label="Add new product form">
         {{ form.hidden_tag() }}
 
         <div class="mb-3">
@@ -61,7 +66,7 @@
             {{ form.packs_per_box(class="form-control") }}
         </div>
         <div>
-            {{ form.submit(class="btn btn-primary") }}
+            {{ form.submit(class="btn btn-primary", aria_label="Submit new product") }}
         </div>
     </form>
 </div>

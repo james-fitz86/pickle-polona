@@ -1,21 +1,36 @@
 {% extends "base_admin.html" %}
 
+{% block meta %}
+    <meta name="description" content="Admin panel: View and manage an individual order placed on Pickle Polona.">
+{% endblock %}
+
 {% block title %}Order {{ order.order_reference }}{% endblock %}
 
 {% block main %}
 <div class="container my-4">
     <h1 class="mb-4">Order Summary</h1>
     {% if order.status == OrderStatus.pending %}
-    <a href="{{ url_for('admin.fulfill_order_view', order_id=order.id) }}" class="btn btn-success mb-4">Fulfill</a>
+    <a href="{{ url_for('admin.fulfill_order_view', order_id=order.id) }}" 
+        class="btn btn-success mb-4"
+        aria-label="Mark order {{ order.order_reference }} as fulfilled">
+        Fulfill</a>
     {% elif order.status == OrderStatus.fulfilled %}
-    <a href="{{ url_for('admin.picklist_view', order_id=order.id) }}" class="btn btn-secondary mb-4">Picklist</a>
+    <a href="{{ url_for('admin.picklist_view', order_id=order.id) }}" 
+        class="btn btn-secondary mb-4"
+        aria-label="View picklist for order {{ order.order_reference }}">
+        Picklist</a>
      <form method="POST" action="{{ url_for('admin.ship_order_view', order_id=order.id) }}" style="display:inline;">
-        <button type="submit" class="btn btn-primary mb-4">Ship</button>
+        <button type="submit" 
+                class="btn btn-primary mb-4"
+                aria-label="Mark order {{ order.order_reference }} as shipped">
+            Ship
+        </button>
     </form>
     {% endif %}
     <div class="row mb-4">
         <div class="col-md-6 mb-4">
             <div class="card shadow-sm">
+                <h2 class="visually-hidden">Order Information</h2>
                 <div class="card-header bg-dark text-white">
                     <strong>Order Info</strong>
                 </div>
@@ -28,6 +43,7 @@
         </div>
         <div class="col-md-6 mb-4">
             <div class="card shadow-sm">
+                <h2 class="visually-hidden">Customer Information</h2>
                 <div class="card-header bg-dark text-white">
                     <strong>Customer Info</strong>
                 </div>
@@ -40,6 +56,7 @@
         </div>
         <div class="col-12 mb-4">
             <div class="card shadow-sm">
+                <h2 class="visually-hidden">Shipping Address</h2>
                 <div class="card-header bg-dark text-white">
                     <strong>Shipping Address</strong>
                 </div>
@@ -56,19 +73,20 @@
         </div>
     </div>
     <div class="card shadow-sm mb-4">
+        <h2 class="visually-hidden">Items in this Order</h2>
         <div class="card-header bg-secondary text-white">
             <strong>Items in this Order</strong>
         </div>
         <div class="card-body p-0">
             <div class="table-responsive">
-                <table class="table table-bordered m-0">
+                <table class="table table-bordered m-0" aria-label="Items in this order">
                     <thead class="table-light">
                         <tr>
-                            <th>Product</th>
-                            <th>SKU</th>
-                            <th>Unit Price</th>
-                            <th>Qty</th>
-                            <th>Subtotal</th>
+                            <th scope="col">Product</th>
+                            <th scope="col">SKU</th>
+                            <th scope="col">Unit Price</th>
+                            <th scope="col">Qty</th>
+                            <th scope="col">Subtotal</th>
                         </tr>
                     </thead>
                     <tbody>

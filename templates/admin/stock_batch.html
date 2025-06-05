@@ -1,9 +1,14 @@
 {% extends "base_admin.html" %}
 
+{% block meta %}
+  <meta name="description" content="Admin panel: Add a new stock batch for a product in Pickle Polona.">
+{% endblock %}
+
 {% block main %}
 <div class="container my-4">
     <h1 class="mb-4">Add Stock Batch</h1>
-    <form method="POST">
+    <h2 class="visually-hidden">Stock Batch Input Form</h2>
+    <form method="POST" aria-label="Add stock batch form">
         {{ form.hidden_tag() }}
 
         <div class="mb-3">
@@ -23,7 +28,7 @@
             {{ form.expiry_date(class="form-control", type="date") }}
         </div>
         <div>
-            {{ form.submit(class="btn btn-success") }}
+            {{ form.submit(class="btn btn-success", aria_label="Submit new stock batch") }}
         </div>
     </form>
 </div>

@@ -1,12 +1,16 @@
 {% extends 'base_admin.html' %}
 
+{% block meta %}
+  <meta name="description" content="Admin login page for Pickle Polona.">
+{% endblock %}
+
 {% block title %}Admin Login{% endblock %}
     
 {% block main %}
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-6 col-lg-4">
-      <h1 id="login-heading" class="text-center mb-4" aria-labelledby="login-heading">Login</h1>
+      <h1 id="login-heading" class="text-center mb-4">Login</h1>
 
       {% if error %}
         <div class="alert alert-danger" role="alert" aria-live="assertive">

@@ -1,71 +1,70 @@
 {% extends 'base_admin.html' %}
 
+{% block meta %}
+  <meta name="description" content="Admin dashboard for Pickle Polona. Access order management, product inventory, stock tracking, and customer messages.">
+{% endblock %}
+
 {% block title %}Dashboard{% endblock %}
 
 {% block main %}
 <div class="container my-5">
     <h1 class="mb-4">Admin Dashboard</h1>
-
     <p class="lead">
         This dashboard gives you access to all admin features for managing the homemade pickle store.
         Use the sections below to navigate and perform actions like managing orders, stock, products, and reviewing customer messages.
     </p>
-
-    <div class="row row-cols-1 row-cols-md-2 g-4">
-
-        <div class="col">
-            <div class="card shadow-sm h-100">
-                <div class="card-body">
-                    <h5 class="card-title">Orders</h5>
-                    <p class="card-text">
-                        View and manage all customer orders. Filter by status, view order details, generate picklists, and mark orders as shipped.
-                    </p>
-                    <a href="{{ url_for('admin.orders') }}" class="btn btn-outline-primary">Manage Orders</a>
+    <section aria-labelledby="admin-actions-heading">
+        <h2 id="admin-actions-heading" class="visually-hidden">Admin Actions</h2>
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            <section class="col" aria-labelledby="orders-heading">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Orders</h5>
+                        <p class="card-text">
+                            View and manage all customer orders. Filter by status, view order details, generate picklists, and mark orders as shipped.
+                        </p>
+                        <a href="{{ url_for('admin.orders') }}" class="btn btn-outline-primary">Manage Orders</a>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="col">
-            <div class="card shadow-sm h-100">
-                <div class="card-body">
-                    <h5 class="card-title">Products</h5>
-                    <p class="card-text">
-                        Add, edit, and manage all products. Control visibility with the active status and update images, descriptions, and pricing.
-                    </p>
-                    <a href="{{ url_for('admin.products') }}" class="btn btn-outline-primary">Manage Products</a>
+            </section>
+            <section class="col" aria-labelledby="products-heading">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Products</h5>
+                        <p class="card-text">
+                            Add, edit, and manage all products. Control visibility with the active status and update images, descriptions, and pricing.
+                        </p>
+                        <a href="{{ url_for('admin.products') }}" class="btn btn-outline-primary">Manage Products</a>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="col">
-            <div class="card shadow-sm h-100">
-                <div class="card-body">
-                    <h5 class="card-title">Stock Batches</h5>
-                    <p class="card-text">
-                        Track and manage inventory by batch. View expiry dates, filter by availability, add new stock batches with locations and delete expired or depleted batches.
-                    </p>
-                    <a href="{{ url_for('admin.stock_batches') }}" class="btn btn-outline-primary">Manage Stock</a>
+            </section>
+            <section class="col" aria-labelledby="stock-heading">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Stock Batches</h5>
+                        <p class="card-text">
+                            Track and manage inventory by batch. View expiry dates, filter by availability, add new stock batches with locations and delete expired or depleted batches.
+                        </p>
+                        <a href="{{ url_for('admin.stock_batches') }}" class="btn btn-outline-primary">Manage Stock</a>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="col">
-            <div class="card shadow-sm h-100">
-                <div class="card-body">
-                    <h5 class="card-title">Contact Messages</h5>
-                    <p class="card-text">
-                        Review messages submitted by users via the contact form. Messages are paginated for easier browsing.
-                    </p>
-                    <a href="{{ url_for('admin.messages') }}" class="btn btn-outline-primary">View Messages</a>
+            </section>
+            <section class="col" aria-labelledby="messages-heading">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Contact Messages</h5>
+                        <p class="card-text">
+                            Review messages submitted by users via the contact form. Messages are paginated for easier browsing.
+                        </p>
+                        <a href="{{ url_for('admin.messages') }}" class="btn btn-outline-primary">View Messages</a>
+                    </div>
                 </div>
-            </div>
+            </section>
         </div>
-    </div>
-
-    <div class="mt-5">
+    </section>
+    <section class="mt-5" aria-labelledby="additional-features-heading">
         <h4 class="mb-3">Additional Features</h4>
         <div class="row row-cols-1 row-cols-md-2 g-4">
-
             <div class="col">
                 <div class="card border-0 bg-light h-100">
                     <div class="card-body">
@@ -100,7 +99,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="col">
                 <div class="card border-0 bg-light h-100">
                     <div class="card-body">
@@ -109,9 +107,8 @@
                     </div>
                 </div>
             </div>
-
         </div>
-    </div>
+    </section>
     <div class="alert alert-warning text-center mt-4">
         <p class="mb-0">
             To test the 500 error page, click 
