@@ -1,11 +1,11 @@
-# 🥒 Homemade Food Shop – Admin Web App
+# 🥒 Homemade Pickle Store – Admin Web App
 
-A full-featured Flask web application for managing a homemade food shop. The app allows admins to manage products, stock batches, orders, and customer messages through a clean, accessible dashboard. Designed with usability, accessibility, and maintainability in mind. Deployed on **Render.com**.
+A full-featured Flask web application for managing a homemade pickle store. The app allows admins to manage products, stock batches, orders, and customer messages through a clean, accessible dashboard. Designed with usability, accessibility, and maintainability in mind. Deployed on **Render.com**.
 
 ## ✨ Features
 - 📦 **Order Management** – View, fulfill, ship orders, and generate picklists  
 - 🥫 **Stock Tracking** – Add/edit batches with expiry, location, and quantity  
-- 🛍️ **Product Management** – Add/edit product info and categorize inventory  
+- 🛍️ **Product Management** – Add/edit product info and categorise inventory  
 - 🗃️ **Database-Backed** – SQLAlchemy models for products, orders, and batches  
 - 🧑‍💻 **Admin Access Only** – All routes protected by environment-secured login  
 - ♿ **Accessible UI** – ARIA labels, semantic headings, and keyboard-friendly  
@@ -18,63 +18,79 @@ A full-featured Flask web application for managing a homemade food shop. The app
 - **Backend:** Flask, SQLAlchemy, Python  
 - **Frontend:** HTML, CSS (Bootstrap), JavaScript  
 - **Deployment:** Render.com  
-- **Database:** Postresql 
+- **Database:** PostgreSQL
 - **Forms:** Flask-WTF with CSRF protection  
 
 
 ## 📁 File Structure
 
 ```plaintext
-homemade-shop/
+pickle-polona/
 ├── app.py                    # Flask app entry point
 ├── config.py                 # Config settings
 ├── .env                      # Environment variables (not committed)
 ├── .gitignore                # Excludes .env, .DS_Store, etc.
 ├── requirements.txt          # Python dependencies
-├── render.yaml               # Render deployment config
+├── extensions.py             # Initialises shared extensions (e.g. SQLAlchemy) to avoid circular imports
 ├── static/                   # CSS, JS, images
 │   ├── css/
 │   ├── js/
 │   └── images/
 ├── templates/
-│   ├── base_admin.html       # Shared layout for admin pages
-│   ├── errors/               # 404.html, 500.html
-│   ├── admin/
-│   │   ├── dashboard.html
-│   │   ├── login.html
-│   │   ├── orders.html
-│   │   ├── order_detail.html
-│   │   ├── picklist.html
-│   │   ├── products.html
-│   │   ├── product_detail.html
-│   │   ├── edit_product.html
+│   ├── errors/               
+│   │   ├── 404.html
+│   │   └── 500.html
+│   ├── admin/                       # Admin-facing templates
 │   │   ├── add_product.html
-│   │   ├── stock_batches.html
+│   │   ├── admin_login.html
+│   │   ├── dashboard.html
+│   │   ├── edit_product.html
+│   │   ├── login.html
+│   │   ├── messages.html
+│   │   ├── order_detail.html
+│   │   ├── orders.html
+│   │   ├── picklist.html
+│   │   ├── product_detail.html
+│   │   ├── products.html
 │   │   ├── stock_batch_add.html
 │   │   ├── stock_batch_edit.html
-│   │   ├── messages.html
-│   └── ...
+│   │   └── stock_batches.html
+│   ├── about.html
+│   ├── base_admin.html       # Shared layout for admin pages
+│   ├── base.html
+│   ├── cart.html
+│   ├── checkout.html
+│   ├── contact.html
+│   ├── index.html
+│   ├── item.html
+│   ├── order_success.html
+│   └── store.html
 ├── models/                   # SQLAlchemy models
+│   ├── __init__.py
+│   ├── admin_model.py
+│   ├── main_model.py
 │   ├── product.py
-│   ├── order.py
-│   └── batch.py
+│   └── store_model.py
 ├── forms/                    # Flask-WTF form classes
+│   ├── checkout_form.py
+│   ├── contact_form.py
 │   ├── product_form.py
-│   ├── stock_batch_form.py
-│   └── login_form.py
+│   └── stock_form.py
 ├── routes/                   # Blueprints
 │   ├── __init__.py
+│   ├── admin.py
 │   ├── main.py
-│   └── admin.py
-├── sitemap.xml
-└── robots.txt
+│   └── store.py
+├── README.md                 # Project Documentation
+├── robots.txt
+└── sitemap.xml
 ```
 
 ## Setup & Installation
 ### 1. Clone the Repository
 ```bash
 git clone https://github.com/james-fitz86/pickle-polona.git
-cd portfolio
+cd pickle-polona
 ```
 
 ### 2. Create a Virtual Environment
@@ -96,15 +112,20 @@ Create a `.env` file in the root of the project directory to store sensitive con
 - **ADMIN_USERNAME**: Set the username for the admin login page.
 - **ADMIN_PASSWORD**: Set the password for the admin login page.
 - **SECRET_KEY**: Set a secret key for Flask's session management (used for securing cookies and sessions).
+- **MESSAGES_PER_PAGE**: Set the number of messages displayed **per page** in the admin messages panel for pagination. 
 - **DATABASE_URL**: Provide the connection string for your PostgreSQL database in the format:
 `postgresql://your_username:your_password@localhost:5432/your_database_name`
 
-Example `.env` file:
+Example `.env` file
+
+```dotenv
 ADMIN_USERNAME=your_admin_username
 ADMIN_PASSWORD=your_admin_password
 SECRET_KEY=your_secret_key
+MESSAGES_PER_PAGE=10
 DATABASE_URL=postgresql://your_username:your_password@localhost:5432/your_database_name
-MESSAGES_PER_PAGE = 10 
+```
+
 
 ### 5. Run the Flask Application
 In `app.py`, ensure you have the following at the bottom of your file to run the app locally:
@@ -142,7 +163,8 @@ Access the website locally at `http://127.0.0.1:8080/`
 6. Under the **Environment** tab, set the following environment variables (click **"Add Environment Variable"** for each one):
    - `ADMIN_USERNAME=your_username`  
    - `ADMIN_PASSWORD=your_password`  
-   - `SECRET_KEY=your_secret_key`  
+   - `SECRET_KEY=your_secret_key`
+   - `MESSAGES_PER_PAGE=set_messages_per_page` 
    - `DATABASE_URL` (you'll set this after creating the database in step 7)
 
 7. In a new tab on Render:
