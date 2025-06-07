@@ -27,6 +27,20 @@
     </section>
     <section role="region" aria-label="Our Values" class="mb-5">
         <h2 class="h4">Our Values</h2>
+        <div class="row mt-4">
+            <div class="col-6 col-md-3 mb-3">
+                <img src="{{ url_for('static', filename='images/vegetables/growing1.jpg') }}" class="img-fluid rounded" alt="Vegetable growing 1">
+            </div>
+            <div class="col-6 col-md-3 mb-3">
+                <img src="{{ url_for('static', filename='images/vegetables/growing2.jpg') }}" class="img-fluid rounded" alt="Vegetable growing 2">
+            </div>
+            <div class="col-6 col-md-3 mb-3">
+                <img src="{{ url_for('static', filename='images/vegetables/growing3.jpg') }}" class="img-fluid rounded" alt="Vegetable growing 3">
+            </div>
+            <div class="col-6 col-md-3 mb-3">
+                <img src="{{ url_for('static', filename='images/vegetables/growing4.jpg') }}" class="img-fluid rounded" alt="Vegetable growing 4">
+            </div>
+        </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item">🌱 Grow locally, preserve naturally</li>
             <li class="list-group-item">🌍 Inclusive for all dietary needs</li>
@@ -34,14 +48,23 @@
         </ul>
     </section>
     <section role="region" aria-label="Meet the Maker" class="mb-5">
-        <article>
-            <h2 class="h4">Meet the Maker</h2>
-            <p>
-                Every batch is made with care, inspired by the seasons and nurtured by hand. From 
-                early morning garden harvests to late-night labeling sessions, you're supporting 
-                more than a product — you're joining a story of love, patience, and purpose.
-            </p>
-        </article>
+        <div class="row align-items-start">
+            <div class="col-md-3 mb-2 mb-md-0">
+                <img src="{{ url_for('static', filename='images/maker.jpg') }}" 
+                    class="img-fluid rounded shadow-sm" 
+                    alt="The maker of the products">
+            </div>
+            <div class="col-md-9">
+                <article>
+                    <h2 class="h4">Meet the Maker</h2>
+                    <p>
+                        Every batch is made with care, inspired by the seasons and nurtured by hand. From 
+                        early morning garden harvests to late-night labeling sessions, you're supporting 
+                        more than a product — you're joining a story of love, patience, and purpose.
+                    </p>
+                </article>
+            </div>
+        </div>
     </section>
     <section role="region" aria-label="Customer Testimonials">
         <h2 class="h4">What Our Customers Say</h2>
